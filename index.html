@@ -582,7 +582,7 @@ function App(){
     if(newTotal>=maxQ){ stopTimer(); setTimeout(()=>setGameOver(true),900); }
   };
 
-  const handleNext=()=>{ if(total<maxQ) nextQ(activeTenses); };
+  const handleNext=()=>{ if(total<maxQ) nextQ(mode==="balisee"?baliseedTenses:activeTenses); };
   const toggleTense=(id)=>setActiveTenses(prev=>prev.includes(id)?prev.filter(t=>t!==id):[...prev,id]);
   const modeGroups=[...new Set(ALL_TENSES.map(t=>t.mode))];
   const timePct=timeLeft/(maxQ*8)*100;
@@ -811,7 +811,7 @@ function App(){
           </div>
         </div>
 
-        <button onClick={startGame} disabled={activeTenses.length<2} className="startbtn" style={{
+        <button onClick={()=>startGame(activeTenses)} disabled={activeTenses.length<2} className="startbtn" style={{
           display:"block",width:"100%",padding:"0.9rem",
           background:activeTenses.length<2?"#21262d":C.accent,
           color:activeTenses.length<2?C.textDim:"#0d1117",
@@ -873,7 +873,7 @@ function App(){
         </div>
 
         <div style={{display:"flex",gap:"0.8rem"}}>
-          <button onClick={startGame} className="startbtn" style={{flex:1,padding:"0.8rem",background:C.accent,color:"#0d1117",border:"none",borderRadius:8,fontSize:"0.95rem",fontFamily:"Georgia,serif",cursor:"pointer",fontWeight:"bold"}}>
+          <button onClick={()=>startGame(mode==="balisee"?baliseedTenses:activeTenses)} className="startbtn" style={{flex:1,padding:"0.8rem",background:C.accent,color:"#0d1117",border:"none",borderRadius:8,fontSize:"0.95rem",fontFamily:"Georgia,serif",cursor:"pointer",fontWeight:"bold"}}>
             Rejouer
           </button>
           <button onClick={()=>{stopTimer();setScreen("home");setPrenom("");}} className="startbtn" style={{flex:1,padding:"0.8rem",background:C.surface2,color:C.text,border:`1px solid ${C.border}`,borderRadius:8,fontSize:"0.95rem",fontFamily:"Georgia,serif",cursor:"pointer"}}>
