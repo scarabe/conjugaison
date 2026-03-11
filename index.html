@@ -1,3 +1,769 @@
+
+Comment faire du vibe coding ?
+
+00:23
+Le Vibe Coding, c'est quoi ?
+Le vibe coding est une approche de développement où tu décris ce que tu veux en langage naturel à une IA, et elle génère le code pour toi. Tu "guides par l'intention" plutôt que d'écrire ligne par ligne.
+
+Comment faire ?
+1. Choisir un outil IA
+
+Claude (ici même) — pour générer du code à la demande
+Cursor — éditeur de code avec IA intégrée
+GitHub Copilot — autocomplétion IA dans VS Code
+Bolt.new / v0.dev — pour des apps web complètes en quelques secondes
+2. Décrire ton intention, pas le code
+
+Au lieu de penser en termes de fonctions et de boucles, tu décris le résultat :
+
+"Crée une page web avec un formulaire de contact qui envoie un email et affiche une confirmation"
+
+3. Itérer par instructions
+
+Tu affines au fur et à mesure :
+
+"Rends le bouton plus grand" "Ajoute une validation du champ email" "Le fond doit être bleu foncé"
+
+4. Tester et corriger en langage naturel
+
+Quand quelque chose ne marche pas :
+
+"Il y a un bug : quand je clique sur le bouton, rien ne se passe. Corrige ça."
+
+Bonnes pratiques
+Sois précis sur le contexte : technologie utilisée (React, Python, etc.), contraintes, public cible
+Une tâche à la fois : découpe les gros projets en petites étapes
+Relis le code généré : même sans tout comprendre, vérifie la logique générale
+Garde le contrôle : l'IA peut se tromper, valide toujours le résultat
+Tu veux essayer sur un projet concret ? Dis-moi ce que tu veux construire !
+
+Mais l’application est sur quel support après ?
+
+00:25
+Bonne question ! Ça dépend de ce que tu crées. Voici les principaux cas :
+
+🌐 Une app web
+C'est le cas le plus courant en vibe coding. Le résultat tourne dans un navigateur et peut être hébergé sur :
+
+Vercel / Netlify — gratuit, déploiement en 1 clic
+GitHub Pages — pour des sites statiques simples
+Ton propre serveur — si tu as un hébergement
+📱 Une app mobile
+Si tu demandes une app iOS/Android, il faut passer par des frameworks comme React Native ou Flutter, puis la soumettre sur l'App Store / Google Play.
+
+🖥️ Une app desktop
+Avec des outils comme Electron, l'app tourne sur Windows / Mac / Linux comme un logiciel classique.
+
+💬 Juste ici, dans Claude
+C'est ce qu'on appelle les Artifacts — des mini-apps interactives qui tournent directement dans la conversation (jeux, calculateurs, formulaires, visualisations...). Pratique pour tester une idée rapidement, sans hébergement !
+
+En résumé, le vibe coding produit du code — c'est toi (ou un service) qui décide ensuite où il tourne. Les outils comme Bolt.new ou v0.dev vont même jusqu'à héberger automatiquement l'app pour toi.
+
+Tu as un projet en tête ? Je peux t'aider à choisir le bon support ! 🚀
+
+Je veux essayer sur un générateur d’exercices en conjugaison par exemple
+
+00:27
+Super idée ! Laisse-moi te créer ça directement ici.
+
+
+Check frontend design skill
+Check frontend design skill
+Voici ton générateur d'exercices de conjugaison, propulsé par l'IA !
+
+
+Fichier créé, lu un fichier
+Fichier créé, lu un fichier
+Voilà ton générateur de conjugaison ! 🎉
+
+Comment ça marche :
+
+Choisis un temps verbal (présent, imparfait, futur…)
+Choisis ton niveau (débutant → avancé)
+Clique sur "Générer un exercice" — Claude choisit un verbe adapté et crée l'exercice
+Remplis les 6 formes conjuguées et vérifie tes réponses
+C'est exactement ça le vibe coding : j'ai décrit ce que je voulais ("un générateur d'exercices de conjugaison"), et le code s'est écrit tout seul. Tu veux modifier quelque chose ? Dis-le moi en langage naturel ! 😊
+
+Conjugaison
+Code · JSX 
+Ton app ne fonctionne pas… super démo dis-moi
+
+00:31
+Désolé pour ça ! Pour que je puisse diagnostiquer le problème, dis-moi ce que tu vois exactement :
+
+Q : Qu'est-ce qui se passe quand tu cliques sur "Générer un exercice" ?
+R : Un message d'erreur
+
+00:31
+Le problème vient probablement des appels à l'API Anthropic — les artifacts React dans Claude.ai ne peuvent pas faire des appels directs à l'API depuis le navigateur pour des raisons de sécurité (CORS).
+
+Je vais réécrire l'app sans appel API externe, avec une base de verbes et conjugaisons intégrée directement dans le code :
+
+
+2 fichiers créés, a exécuté une commande, lu un fichier
+2 fichiers créés, a exécuté une commande, lu un fichier
+Voilà, cette version devrait fonctionner !
+
+Le problème venait du fait que les appels à l'API Anthropic sont bloqués depuis les artifacts pour des raisons de sécurité (CORS). J'ai donc intégré directement une base de 9 verbes couvrant les 3 niveaux et 5 temps — tout tourne localement, sans réseau. C'est d'ailleurs une leçon classique du vibe coding : l'IA peut générer du code qui semble logique mais qui ne fonctionne pas dans l'environnement cible — il faut toujours tester ! 😄
+
+Conjugaison
+Code · JSX 
+Plus précisément l’appli propose un verbe conjugué à un temps au hasard à une personne au hasard et l’élève doit trouver le temps. Tous les temps de la langue française peuvent être sélectionnés mais l’utilisateur peut choisir la liste des temps en amont du besoin. 
+Votons voir ce que tu es capable de faire.
+
+00:43
+Beau défi ! Je me retrousse les manches.
+
+
+Read frontend design skill
+Read frontend design skill
+Voici mon plan avant de coder :
+
+Concept : L'élève voit une forme conjuguée (ex: "ils auraient chanté") et doit identifier le temps. Interface façon cahier d'école vintage — papier crème, encre bleue, lignes réglées — mais avec des animations modernes et soignées.
+
+Mécanique :
+
+Écran 1 : Sélection des temps à inclure (tous cochés par défaut)
+Écran 2 : Une forme conjuguée + pronom s'affiche → l'élève clique sur le bon temps parmi les options
+Score, streak, et feedback immédiat
+
+A exécuté une commande, fichier créé, lu un fichier
+A exécuté une commande, fichier créé, lu un fichier
+Voilà ! Cette fois c'est exactement ce que tu as décrit :
+
+Ce que ça fait :
+
+Écran de configuration — 19 temps couvrant tous les modes (indicatif, subjonctif, conditionnel, impératif, participe, infinitif), cochables individuellement
+Jeu — une forme conjuguée s'affiche avec son pronom et son infinitif, et tu dois identifier le temps parmi 4 propositions (QCM)
+Score, barre de progression et streak 🔥 qui s'embrase à partir de 3 bonnes réponses consécutives
+8 verbes couvrant tous les groupes et irréguliers (chanter, finir, venir, avoir, être, aller, faire, prendre)
+L'esthétique cahier d'école vintage avec les lignes réglées et la reliure orange, c'était voulu 😄 — dis-moi si tu veux modifier quelque chose !
+
+Conjugaison
+Code · JSX 
+Plus de verbes. 
+Couleurs plus sombres
+Pas le conditionnel passé 2e forme
+Un chrono sur 10 ou 20 questions au choix
+
+00:52
+
+Consulté un fichier, a exécuté une commande, fichier créé
+Consulté un fichier, a exécuté une commande, fichier créé
+Voilà la version améliorée ! Voici ce qui a changé :
+
+16 verbes au total : chanter, finir, venir, avoir, être, aller, faire, prendre, pouvoir, vouloir, savoir, dire, voir, partir, lire, écrire
+Thème sombre façon GitHub dark — fond 
+#0d1117, surfaces charcoal, accents bleu électrique
+Conditionnel passé 2ème forme supprimé de la liste
+Chrono — barre de temps en haut qui vire de vert → orange → rouge, avec le choix 10 ou 20 questions au départ (8 secondes allouées par question)
+Écran de résultats en fin de partie avec score, précision et meilleure série
+Conjugaison
+Code · JSX 
+C’est presque parfait. Je souhaite :
+L’élève écrit son prénom 
+Son score est envoyé dans un Google sheet avec la date et l’heure et son prénom bien sûr.
+
+01:00
+Belle idée pour le suivi des élèves ! Petit problème technique à anticiper : envoyer directement dans Google Sheets depuis un artifact nécessite soit une API key exposée (risqué), soit un intermédiaire.
+
+La solution la plus simple et robuste : Google Apps Script — un petit script gratuit hébergé par Google qui reçoit les scores et les écrit dans ton Sheet.
+
+Q : Tu as accès à Google Sheets et Google Apps Script ?
+R : Non, explique-moi comment faire
+
+01:01
+Voilà le plan complet. C'est plus simple qu'il n'y paraît — environ 5 minutes de configuration.
+
+Étape 1 — Crée ton Google Sheet
+
+Va sur sheets.google.com et crée un nouveau classeur
+En ligne 1, mets ces en-têtes : Prénom | Score | Total | Précision | Date | Heure
+Étape 2 — Crée le script Apps Script
+
+Dans ton Sheet, clique sur Extensions → Apps Script
+Efface tout le code existant et colle exactement ceci :
+javascript
+function doPost(e) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const data = JSON.parse(e.postData.contents);
+  sheet.appendRow([
+    data.prenom,
+    data.score,
+    data.total,
+    data.precision + "%",
+    data.date,
+    data.heure
+  ]);
+  return ContentService
+    .createTextOutput(JSON.stringify({ status: "ok" }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+Clique sur Enregistrer (icône disquette)
+Étape 3 — Déploie le script comme Web App
+
+Clique sur Déployer → Nouveau déploiement
+Clique sur l'icône ⚙️ à côté de "Sélectionner le type" → choisis Application Web
+Configure ainsi :
+Description : Scores conjugaison
+Exécuter en tant que : Moi
+Qui a accès : Tout le monde (obligatoire pour que l'app puisse envoyer)
+Clique Déployer → accepte les autorisations Google
+Copie l'URL qui s'affiche (elle ressemble à https://script.google.com/macros/s/XXXX/exec)
+Étape 4 — Colle l'URL dans l'application
+
+Une fois que tu as cette URL, donne-la moi et je l'intègre directement dans l'app ! L'élève entrera son prénom avant de jouer, et son score sera envoyé automatiquement dans ton Sheet à la fin de chaque partie.
+
+J’essaie sur l’app sheet sur iphone et je ne vois pas « extensions »
+
+01:09
+Normal ! L'app mobile Google Sheets est très limitée — Apps Script n'est accessible que depuis un navigateur sur ordinateur.
+
+Deux options :
+
+Option A — Depuis un Mac/PC (recommandée) Ouvre sheets.google.com dans Safari ou Chrome sur un ordinateur, et suis les étapes que je t'ai décrites. Ça prend 5 minutes.
+
+Option B — Depuis l'iPhone avec un service intermédiaire On peut utiliser Make (ex-Integromat) ou n8n qui jouent le rôle de pont entre l'app et Google Sheets, sans toucher à Apps Script. C'est un peu plus de configuration mais ça marche 100% mobile.
+
+La solution la plus rapide reste l'Option A. Est-ce que tu as accès à un ordinateur pour faire la configuration initiale ? Une fois le script déployé, tout fonctionnera automatiquement — tu n'auras plus jamais besoin d'y retourner.
+
+Q : Quelle option te convient ?
+R : Je veux juste l'app sans Google Sheets pour l'instant
+
+01:10
+Parfait, on intègre le prénom sans la partie Google Sheets — tu pourras l'ajouter plus tard quand tu auras accès à un ordi.
+
+
+Read current app to update it
+Read current app to update it
+Je vais juste modifier l'écran de setup pour ajouter le prénom, et l'écran de résultats pour l'afficher — sans toucher aux 600 lignes de données.
+
+
+6 fichiers modifiés, lu un fichier
+6 fichiers modifiés, lu un fichier
+Le flux est maintenant :
+
+Écran prénom → l'élève écrit son prénom (min. 2 caractères), Entrée ou bouton pour continuer
+Écran config → accueille l'élève par son prénom, il choisit les temps et le nombre de questions
+Jeu → identique à avant
+Résultats → affiche "Bravo, [prénom] !" avec le score
+"Changer d'élève" → revient à l'écran prénom pour le suivant
+Quand tu auras accès à un ordi pour configurer Google Sheets, dis-le moi — j'ajouterai l'envoi automatique des scores en 5 minutes ! 🎯
+
+Conjugaison
+Code · JSX 
+J’aimerais un système de points allant jusqu’à 100 et tenant compte de la justesse des résultats évidemment mais aussi du temps de réponse. Pondere ça comme tu veux mais il doit être toujours juste pour chaque élève
+
+01:15
+Voilà ma proposition de pondération :
+
+Score sur 100 = Justesse (60%) + Rapidité (40%)
+
+Justesse : (bonnes réponses / total) × 60
+Rapidité : pour chaque bonne réponse, un bonus selon le temps restant sur les 8 secondes allouées. Réponse en 1s = max, réponse en 8s = 0. La moyenne de ces bonus × 40.
+Toujours juste : le score est normalisé sur les questions réellement répondues, donc 10 ou 20 questions donnent un résultat comparable.
+
+A consulté 3 fichiers
+A consulté 3 fichiers
+Maintenant j'ai tout ce qu'il faut. Je vais ajouter :
+
+Un chrono par question (8s) pour mesurer la rapidité individuelle
+Le calcul du score /100 avec la formule justesse + rapidité
+
+2 fichiers modifiés
+2 fichiers modifiés
+Now update the game-over screen to show the /100 score prominently, and the game screen to show the per-question timer:
+
+
+Update game over screen with score/100
+Update game over screen with score/100
+Now update the game screen header and add per-question timer ring:
+
+
+2 fichiers modifiés, lu un fichier
+2 fichiers modifiés, lu un fichier
+La réponse de Claude a été interrompue.
+Non je crois que si la réponse est fausse il n’y a pas de point du tout.
+
+01:18
+Tout à fait logique ! Si la réponse est fausse, zéro point — point de rapidité inclus. La formule devient donc simplement :
+
+Score /100 = (bonnes réponses / total) × 60 + (moyenne des bonus vitesse sur bonnes réponses) × 40
+
+Ce qui est déjà exactement ce que le code fait — speedBonuses n'est alimenté que sur les bonnes réponses. La seule chose à changer c'est la formule de computeScore100 qui n'a pas besoin de se compliquer.
+
+Mais en y réfléchissant, il y a un souci de cohérence : si un élève répond juste à 5/10 très vite, et un autre juste à 5/10 très lentement, le premier aura plus de points — c'est bien ce que tu veux ?
+
+Et surtout : est-ce que le score doit rester sur 100 même si on répond vite à tout ? Actuellement oui, 100 = tout bon + tout instantané. Ça te convient ?
+
+Q : Quelle formule te convient ?
+R : Fausse = 0 pt, juste rapide = plus de pts (actuel)
+
+01:20
+Parfait, c'est déjà ce que le code fait ! Mais en relisant, j'ai trouvé un vrai bug : computeScore100 utilisait total comme dénominateur pour la justesse, ce qui pénalisait les réponses rapides correctes si certaines questions expiraient. Je simplifie et clarifie la formule :
+
+Chaque bonne réponse = (60/maxQ) + bonus_vitesse × (40/maxQ) → Tout bon + tout instantané = 100. Tout faux = 0. Toujours juste.
+
+
+A consulté 2 fichiers, exécuté 2 commandes, fichier modifié
+A consulté 2 fichiers, exécuté 2 commandes, fichier modifié
+Voilà ! La formule est maintenant propre et équitable :
+
+Situation	Points
+Réponse fausse ou timeout	0 pt
+Bonne réponse en 1s	~10 pts (justesse + plein bonus vitesse)
+Bonne réponse en 4s	~8 pts (justesse + demi bonus vitesse)
+Bonne réponse en 8s	~6 pts (justesse + 0 bonus vitesse)
+10 questions tout bon tout vite = 100/100. 10 questions tout faux = 0/100. Et le résultat est identique que tu joues à 10 ou 20 questions.
+
+Conjugaison
+Code · JSX 
+Que se passe t’il quand je partage l’app sur whatt’app ?
+
+01:27
+Quand tu partages le lien de l'artifact Claude sur WhatsApp, voici ce qui se passe :
+
+Ce que reçoit l'élève : Un lien vers claude.ai — et pour l'ouvrir, il faudra être connecté à un compte Claude. Ce n'est pas idéal pour des élèves.
+
+La vraie solution pour partager l'app librement :
+
+Tu as besoin de l'héberger quelque part. Les options les plus simples :
+
+Option A — Vercel ou Netlify (gratuit, 5 min sur ordi) Tu exportes le code, tu le déposes, tu obtiens un lien public type conjugaison-dupont.vercel.app que n'importe qui peut ouvrir sans compte.
+
+Option B — CodeSandbox ou StackBlitz Tu colles le code dans ces outils en ligne, tu obtiens un lien public instantané. Accessible depuis un iPhone.
+
+Option C — GitHub Pages (gratuit, permanent) Un peu plus technique mais très stable pour un usage scolaire long terme.
+
+Pour l'instant, la façon la plus simple de l'utiliser en classe c'est de :
+
+Ouvrir Claude sur ton propre téléphone ou tablette
+Faire passer l'appareil à chaque élève pour qu'il entre son prénom et joue
+Quand tu auras accès à un ordi, je peux te générer le projet complet prêt à déployer sur Vercel en 2 clics — avec le Google Sheets intégré. Ça vaudrait le coup de tout faire en même temps ! 🎯
+
+Ok je ferai ça demain sur mon mac. Merci. C’est top
+
+01:28
+Avec plaisir ! 🎉
+
+C'est une belle démonstration de vibe coding — en quelques échanges on est passé d'une idée à une app fonctionnelle avec chrono, score sur 100, gestion des prénoms, et bientôt Google Sheets + lien partageable.
+
+Demain sur ton Mac, on fera tout d'un coup :
+
+Le script Google Apps Script pour enregistrer les scores
+Le déploiement sur Vercel pour avoir un lien WhatsApp-friendly
+À demain ! 👋
+
+me revoici, au commande de mon mac. on en était où ?
+
+09:21
+Parfait timing ! On avait tout finalisé côté app, il restait deux choses à faire sur Mac :
+
+1. Google Apps Script — pour enregistrer les scores dans un Google Sheet 2. Déploiement sur Vercel — pour avoir un lien public partageable sur WhatsApp
+
+On fait ça dans l'ordre. Commence par l'étape Google Sheets :
+
+Va sur sheets.google.com et crée un nouveau classeur
+En ligne 1, mets ces en-têtes : Prénom · Score /100 · Réponses justes · Total · Précision · Date · Heure
+Une fois fait, dis-le moi — on passe au script Apps Script
+C'est parti ? 🚀
+
+c'est bon
+
+09:22
+Super ! Maintenant le script :
+
+Dans ton Sheet, clique sur Extensions → Apps Script
+Efface tout le code existant et colle exactement ceci :
+javascript
+function doPost(e) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const data = JSON.parse(e.postData.contents);
+  
+  const now = new Date();
+  const date = now.toLocaleDateString('fr-FR');
+  const heure = now.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+  
+  sheet.appendRow([
+    data.prenom,
+    data.score100,
+    data.score,
+    data.total,
+    data.precision + "%",
+    date,
+    heure
+  ]);
+  
+  return ContentService
+    .createTextOutput(JSON.stringify({ status: "ok" }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+Clique sur Enregistrer (icône 💾 ou Cmd+S)
+Dis-moi quand c'est fait !
+
+ok
+
+09:23
+Maintenant on déploie le script :
+
+Clique sur Déployer → Nouveau déploiement
+Clique sur l'icône ⚙️ à côté de "Sélectionner le type" → choisis Application Web
+Configure ainsi :
+Exécuter en tant que : Moi
+Qui a accès : Tout le monde
+Clique Déployer
+Google va te demander d'autoriser l'accès — accepte tout
+À la fin tu verras une URL qui commence par https://script.google.com/macros/s/...
+Copie cette URL et colle-la moi ici !
+
+ça me dit ça : Google hasn’t verified this app
+The app is requesting access to sensitive info in your Google Account. Until the developer (sylvain.comba@gmail.com) verifies this app with Google, you shouldn't use it.
+
+09:27
+C'est normal ! C'est toi le développeur, donc tu peux passer outre sans risque.
+
+Clique sur "Advanced" (en bas à gauche de l'écran), puis sur "Go to [nom de ton projet] (unsafe)".
+
+Ensuite accepte les permissions. C'est un avertissement standard de Google quand le script n'est pas publié sur le Play Store — ça n'a aucune importance pour un usage personnel/scolaire. 👍
+
+https://script.google.com/macros/s/AKfycbzKX57-f1eSW_9ay8iv2F0NGuPfHnkxwRbhr9h8mFrzQ9FnfzJGYibVEzMC2aK8yk52/exec
+
+09:28
+Parfait ! J'intègre l'URL dans l'app maintenant.
+
+
+A consulté 3 fichiers
+A consulté 3 fichiers
+J'ai tout ce qu'il faut. J'ajoute l'envoi automatique vers Google Sheets dès que la partie se termine, avec un indicateur d'envoi sur l'écran de résultats.
+
+
+Fichier modifié, a exécuté une commande
+Fichier modifié, a exécuté une commande
+Now trigger sendToSheet when game ends, and reset sendStatus on new game:
+
+
+Add sendToSheet trigger on gameOver and reset on startGame
+Add sendToSheet trigger on gameOver and reset on startGame
+Now add the send status indicator on the game over screen:
+
+
+A exécuté une commande, lu un fichier
+A exécuté une commande, lu un fichier
+L'app envoie maintenant automatiquement les scores à la fin de chaque partie. Sur l'écran de résultats tu verras :
+
+⏳ Envoi du score en cours…
+✓ Score enregistré dans Google Sheets !
+⚠️ Échec de l'envoi si pas de connexion
+Maintenant passons à l'étape 2 — le déploiement sur Vercel pour avoir un vrai lien partageable. Tu as un compte GitHub ? (c'est le plus simple pour déployer sur Vercel)
+
+Conjugaison
+Code · JSX 
+non pas de compte github
+
+09:29
+Pas de problème, Vercel permet de déployer directement sans GitHub. Voici la méthode la plus simple :
+
+Option : Déployer via Netlify Drop (zéro compte requis)
+
+On va d'abord transformer le fichier JSX en site web complet, puis tu le glisses-déposes sur Netlify.
+
+Je te génère le projet complet prêt à déposer — j'ai juste besoin de créer un dossier avec les bons fichiers. Ça te va ?
+
+
+Check skills available
+Check skills available
+Je vais créer un fichier HTML autonome qui contient toute l'app — React inclus via CDN, pas besoin de Node.js ni de compilation. Tu le glisses sur Netlify Drop et c'est en ligne.
+
+
+Read full JSX to convert to standalone HTML
+Read full JSX to convert to standalone HTML
+Parfait, j'ai tout le code. Je génère maintenant un fichier index.html autonome — React via CDN, Babel intégré, zéro installation.
+
+
+Exécuté 4 commandes, lu un fichier
+Exécuté 4 commandes, lu un fichier
+Voilà ! Maintenant pour le mettre en ligne en 2 minutes :
+
+1. Télécharge le fichier index.html ci-dessus sur ton Mac
+
+2. Va sur netlify.com/drop
+
+3. Glisse-dépose le fichier index.html directement dans la zone
+
+4. Netlify te génère instantanément un lien du type https://funny-name-123.netlify.app
+
+Ce lien est public, sans compte requis, partageable sur WhatsApp — n'importe quel élève peut l'ouvrir sur son téléphone. 🎉
+
+Index
+Code · HTML 
+c'est bon j'ai créé un compte github
+
+09:41
+Parfait, c'est encore mieux avec GitHub ! On va déployer sur Vercel, qui est plus élégant que Netlify pour ce type de projet.
+
+Voici les étapes :
+
+1. Crée un nouveau repository sur GitHub
+
+Va sur github.com → clique sur "New"
+Nomme-le conjugaison (ou ce que tu veux)
+Laisse tout par défaut → clique "Create repository"
+2. Upload le fichier
+
+Sur la page du repo, clique "uploading an existing file"
+Glisse-dépose le fichier index.html que tu as téléchargé
+Clique "Commit changes"
+Dis-moi quand c'est fait, on passe à Vercel ! 🚀
+
+mais je n'ai pas vu le fichier à telecharger
+
+09:44
+Ah oui, le bouton de téléchargement était discret ! Le voici à nouveau :
+
+
+Presented file
+Presented file
+Clique sur le fichier index ci-dessus — tu devrais voir une option pour le télécharger sur ton Mac. Ensuite on l'uploade sur GitHub !
+
+Index
+Code · HTML 
+mais il n'y a pas de bouton au dessus
+
+09:46
+Tu as raison, désolé ! Dans l'interface Claude sur Mac, les fichiers apparaissent parfois sans bouton visible.
+
+Essaie ça : clique droit sur le fichier index → "Enregistrer sous" ou "Télécharger".
+
+Sinon autre méthode — copie-colle directement depuis ici. Ouvre TextEdit sur ton Mac, crée un nouveau fichier, et je te donne le contenu à coller. Mais le fichier fait 62 000 caractères, c'est long...
+
+La méthode la plus simple finalement : tu as GitHub, donc on peut utiliser Vercel directement connecté à GitHub sans même télécharger de fichier. Je peux créer le fichier directement dans ton repo via les instructions.
+
+Dis-moi — tu vois bien le repo GitHub que tu viens de créer ? On va uploader le fichier directement depuis l'interface web de GitHub sans rien télécharger. 🙂
+
+puisque je ne vois rien à télécharger faisons comme tu dis
+
+09:48
+OK ! Sur la page de ton repo GitHub :
+
+Clique sur "uploading an existing file" ou "Add file → Create new file"
+Nomme le fichier index.html
+Je vais te donner le contenu à coller — mais vu la taille, fais d'abord ça et dis-moi quand tu vois la zone de texte pour coller le code.
+ok
+
+09:50
+Le fichier est trop long pour le coller en une fois dans le chat. Voici une meilleure approche :
+
+Sur ta page GitHub avec la zone de texte ouverte, reste sur cette page et ouvre un nouvel onglet. Dans ce nouvel onglet, va sur :
+
+👉 gist.github.com
+
+C'est un outil GitHub pour partager du code. On va :
+
+Créer un Gist avec ton fichier
+Le connecter directement à Vercel
+Clique sur "+" en haut à droite pour créer un nouveau Gist, nomme le fichier index.html, et dis-moi quand tu vois la grande zone de texte vide — je te donne le code à coller en plusieurs morceaux !
+
+ok
+
+09:52
+Voici le contenu à coller — fais Cmd+A puis Cmd+C pour tout copier :
+
+
+Display the HTML file content
+Display the HTML file content
+
+Display the HTML file content
+
+Script
+Terminé
+Parfait ! Maintenant sélectionne tout ce texte (Cmd+A dans la zone de texte du Gist) et colle le contenu que tu as copié depuis le message précédent.
+
+Ensuite :
+
+En bas de la page, clique sur "Create secret gist"
+Sur la page du Gist créé, clique sur "Raw" (bouton en haut à droite du fichier)
+Copie l'URL de la page Raw qui s'ouvre — elle ressemble à https://gist.githubusercontent.com/...
+Dis-moi quand tu as cette URL Raw ! 🚀
+
+https://gist.githubusercontent.com/scarabe/cc3f6f85df6eadccbbd1ae880d5313e9/raw/fffdb09e4341ddafd9ab8df901991e80698e61fa/index.html
+
+09:58
+Parfait ! Maintenant direction Vercel :
+
+Va sur vercel.com et connecte-toi avec ton compte GitHub
+Clique sur "Add New Project"
+En bas de page, cherche "Import Third-Party Git Repository" ou "Deploy from URL"
+Colle cette URL : https://gist.github.com/scarabe/cc3f6f85df6eadccbbd1ae880d5313e9
+Clique Deploy
+Dis-moi ce que tu vois ! 🚀
+
+je ne vois pas "ad new project"
+
+10:07
+Pas de souci ! Décris-moi ce que tu vois sur la page Vercel — un dashboard, des boutons, un menu ? Je t'guide depuis ce que tu as devant toi. 🙂
+
+en bas il y a "create empty project"
+
+10:07
+Clique dessus ! Ensuite dis-moi ce qui apparaît. 🙂
+
+je vois "connect git repository
+
+10:09
+Clique sur "Connect Git Repository" → ça devrait te proposer de connecter ton compte GitHub. Accepte la connexion.
+
+Ensuite tu verras tes repos GitHub apparaître — mais comme ton fichier est dans un Gist (pas un vrai repo), on va faire autrement.
+
+Pendant que tu es là, retourne sur GitHub et crée un vrai repo :
+
+Nouvel onglet → github.com/new
+Nomme-le conjugaison
+Coche "Add a README file"
+Clique "Create repository"
+Une fois créé, clique "Add file → Upload files"
+Glisse ton fichier index.html depuis le Gist — ou on va le télécharger autrement
+En fait, le plus simple : sur la page de ton Gist, clique sur les "..." ou sur le nom du fichier, tu devrais voir "Download" ou "Raw". Sur la page Raw, fais Cmd+S pour sauvegarder le fichier sur ton Mac !
+
+Essaie ça et dis-moi si tu as le fichier sur ton bureau. 📁
+
+bon j'ai connecté vercel à github et il a connecté mon truc conjugaison
+
+10:12
+Excellent ! Maintenant sur Vercel :
+
+Clique sur le repo conjugaison
+Clique "Deploy" (ou "Import" puis "Deploy")
+Vercel va déployer automatiquement. Dans 30 secondes tu auras ton URL ! 🚀
+
+je vois "create hook", c'est quoi ?
+
+10:14
+Non, passe cette étape — c'est optionnel et pas utile pour toi. Cherche un bouton "Deploy" ou "Continue" sur la même page. Il est souvent en bas ou en haut à droite. Tu vois quoi d'autre sur la page ?
+
+bon je ne vois pas un truc deploy... je suis sur le site vercel, dans les settings "git" et je vois que mon projet github qui se nomme scarabe/conjugaison est connecté depuis 8minutes... mais pas de bouton deploy
+
+10:20
+OK ! Va sur vercel.com/dashboard — tu devrais voir ton projet conjugaison avec un bouton "Visit" ou l'URL directe de ton site.
+
+Vercel a peut-être déjà tout déployé automatiquement dès la connexion avec GitHub ! Dis-moi ce que tu vois sur le dashboard. 🎉
+
+ça dit " no production deployment
+
+10:27
+Normal ! Ton repo GitHub est vide — il n'a pas encore de fichier index.html à déployer.
+
+Voici la solution la plus rapide :
+
+Va sur github.com/scarabe/conjugaison
+Clique "Add file" → "Create new file"
+Nomme le fichier index.html
+Dans la grande zone de texte, colle tout le contenu du message plus haut (le gros bloc de code)
+Clique "Commit changes"
+Vercel va détecter le nouveau fichier et déployer automatiquement en 30 secondes !
+
+Pour copier le code : remonte dans cette conversation jusqu'au message où j'affiche le contenu du fichier (le grand bloc qui commence par <!DOCTYPE html>) et copie tout. 🙂
+
+voici le lien : https://project-zn9xv-bzk8g4lij-scarabes-projects.vercel.app?_vercel_share=gjNDKiwrnLOgAk8F04vI14YxWPNZycgv
+
+10:34
+🎉 C'est en ligne !
+
+Teste-le sur ton téléphone — ouvre ce lien dans Safari ou Chrome et dis-moi si tout fonctionne bien !
+
+Et pour partager sur WhatsApp, tu peux envoyer directement ce lien. Les élèves pourront jouer sans compte, sans installation, depuis n'importe quel téléphone. 🚀
+
+si je comprends bien, je ne peux plus améliorer l'aplication une fois qu'elle est en ligne ?
+
+10:35
+Si, au contraire ! C'est même l'avantage de GitHub + Vercel. Le flux est simple :
+
+Tu me demandes une amélioration ici sur Claude
+Je modifie le code
+Tu copies-colles le nouveau code dans ton fichier index.html sur GitHub (via "Edit" → crayon ✏️)
+Tu cliques "Commit changes"
+Vercel redéploie automatiquement en 30 secondes — le lien reste le même
+Donc le lien que tu as partagé ne changera jamais, mais l'app derrière s'améliorera à chaque fois. 👌
+
+Tu as déjà des améliorations en tête ?
+
+attends je vais tester d'abord
+
+10:36
+Bien sûr, prends ton temps ! 🙂
+
+j'aimerais 2 options :
+* un bouton vers une partie balisée pour laquelle je pourrais controler les temps proposés
+* un bouton d'entrainement libre aux temps choisis par les joueurs
+c'est jouable ?
+
+10:52
+Oui, tout à fait jouable ! Si je comprends bien :
+
+Mode "Partie balisée" — tu as défini les temps en amont (par exemple uniquement présent + imparfait), les élèves n'ont pas accès aux réglages, ils jouent directement.
+
+Mode "Entraînement libre" — l'élève choisit lui-même les temps avant de jouer, comme actuellement.
+
+Quelques questions pour bien cadrer :
+
+Q : Pour la partie balisée, comment tu définis les temps ?
+R : Tu les choisis via un code/mot de passe enseignant
+
+Q : Les scores de la partie balisée et de l'entraînement libre vont-ils dans le même Google Sheet ?
+R : Seulement la partie balisée envoie les scores
+
+10:54
+Parfait, c'est très clair ! Voilà ce que je vais construire :
+
+Écran d'accueil : deux boutons — "Partie balisée" et "Entraînement libre"
+Entraînement libre : l'élève choisit ses temps, pas d'envoi Google Sheets
+Partie balisée : un code enseignant (que tu me donnes) déverrouille un écran de config où tu choisis les temps — ces réglages sont ensuite verrouillés pour les élèves, et les scores sont envoyés au Sheet
+Deux questions pratiques :
+
+Q : Le code enseignant, comment on fait ?
+R : Un code fixe dans le code (ex: 1234)
+
+Q : Quels temps veux-tu pré-sélectionner par défaut en partie balisée ? (Sélectionnez toutes les réponses applicables)
+R : Présent indicatif, Imparfait, Passé composé, Futur simple
+
+10:54
+Quel est le code que tu veux utiliser ?
+
+teacher
+
+10:55
+Parfait ! Je code tout ça maintenant.
+
+
+Exécuté 5 commandes, a consulté 2 fichiers
+Exécuté 5 commandes, a consulté 2 fichiers
+Maintenant je régénère le fichier HTML autonome :
+
+
+A exécuté une commande, lu un fichier
+A exécuté une commande, lu un fichier
+C'est prêt ! Voici ce qui a changé :
+
+Écran d'accueil avec deux boutons :
+
+🎯 Partie balisée → prénom → jeu direct (temps imposés) → score envoyé au Sheet
+🕹️ Entraînement libre → prénom → config des temps → jeu → pas d'envoi
+Accès enseignant (discret, en bas) :
+
+Code teacher pour déverrouiller
+Tu coches/décoches les temps de la partie balisée
+Par défaut : Présent, Imparfait, Passé composé, Futur simple
+Pour mettre à jour sur GitHub : va sur ton repo scarabe/conjugaison, clique sur index.html → ✏️ Edit → sélectionne tout → colle le nouveau contenu → Commit. Vercel redéploie automatiquement ! 🚀
+
+Index
+Code · HTML 
+
+
+
+
+Claude est une IA et peut faire des erreurs. Veuillez vérifier les réponses.
+Index · HTML
+Copier
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -16,7 +782,6 @@
   <div id="root"></div>
   <script type="text/babel">
     const { useState, useEffect, useCallback, useRef } = React;
-
 
 // ─── TENSES (sans conditionnel passé 2ème forme) ──────────────────────────────
 const ALL_TENSES = [
@@ -60,6 +825,957 @@ const VERBS = [
       present_sub:{je:"chante",tu:"chantes",il:"chante",elle:"chante",nous:"chantions",vous:"chantiez",ils:"chantent",elles:"chantent"},
       imparfait_sub:{je:"chantasse",tu:"chantasses",il:"chantât",elle:"chantât",nous:"chantassions",vous:"chantassiez",ils:"chantassent",elles:"chantassent"},
       passe_sub:{je:"aie chanté",tu:"aies chanté",il:"ait chanté",elle:"ait chanté",nous:"ayons chanté",vous:"ayez chanté",ils:"aient chanté",elles:"aient chanté"},
+      plus_que_parfait_sub:{je:"eusse chanté",tu:"eusses chanté",il:"eût chanté",elle:"eût chanté",nous:"eussions chanté",vous:"eussiez chanté",ils:"eussent chanté",elles:"eussent chanté"},
+      present_cond:{je:"chanterais",tu:"chanterais",il:"chanterait",elle:"chanterait",nous:"chanterions",vous:"chanteriez",ils:"chanteraient",elles:"chanteraient"},
+      passe1_cond:{je:"aurais chanté",tu:"aurais chanté",il:"aurait chanté",elle:"aurait chanté",nous:"aurions chanté",vous:"auriez chanté",ils:"auraient chanté",elles:"auraient chanté"},
+      present_imp:{tu:"chante",nous:"chantons",vous:"chantez"},
+      present_part:{_:"chantant"},passe_part:{_:"chanté"},present_inf:{_:"chanter"},
+    }
+  },
+  {
+    inf:"finir",
+    forms:{
+      present_ind:{je:"finis",tu:"finis",il:"finit",elle:"finit",nous:"finissons",vous:"finissez",ils:"finissent",elles:"finissent"},
+      imparfait_ind:{je:"finissais",tu:"finissais",il:"finissait",elle:"finissait",nous:"finissions",vous:"finissiez",ils:"finissaient",elles:"finissaient"},
+      passe_simple:{je:"finis",tu:"finis",il:"finit",elle:"finit",nous:"finîmes",vous:"finîtes",ils:"finirent",elles:"finirent"},
+      futur_simple:{je:"finirai",tu:"finiras",il:"finira",elle:"finira",nous:"finirons",vous:"finirez",ils:"finiront",elles:"finiront"},
+      passe_compose:{je:"ai fini",tu:"as fini",il:"a fini",elle:"a fini",nous:"avons fini",vous:"avez fini",ils:"ont fini",elles:"ont fini"},
+      plus_que_parfait:{je:"avais fini",tu:"avais fini",il:"avait fini",elle:"avait fini",nous:"avions fini",vous:"aviez fini",ils:"avaient fini",elles:"avaient fini"},
+      futur_anterieur:{je:"aurai fini",tu:"auras fini",il:"aura fini",elle:"aura fini",nous:"aurons fini",vous:"aurez fini",ils:"auront fini",elles:"auront fini"},
+      passe_anterieur:{je:"eus fini",tu:"eus fini",il:"eut fini",elle:"eut fini",nous:"eûmes fini",vous:"eûtes fini",ils:"eurent fini",elles:"eurent fini"},
+      present_sub:{je:"finisse",tu:"finisses",il:"finisse",elle:"finisse",nous:"finissions",vous:"finissiez",ils:"finissent",elles:"finissent"},
+      imparfait_sub:{je:"finisse",tu:"finisses",il:"finît",elle:"finît",nous:"finissions",vous:"finissiez",ils:"finissent",elles:"finissent"},
+      passe_sub:{je:"aie fini",tu:"aies fini",il:"ait fini",elle:"ait fini",nous:"ayons fini",vous:"ayez fini",ils:"aient fini",elles:"aient fini"},
+      plus_que_parfait_sub:{je:"eusse fini",tu:"eusses fini",il:"eût fini",elle:"eût fini",nous:"eussions fini",vous:"eussiez fini",ils:"eussent fini",elles:"eussent fini"},
+      present_cond:{je:"finirais",tu:"finirais",il:"finirait",elle:"finirait",nous:"finirions",vous:"finiriez",ils:"finiraient",elles:"finiraient"},
+      passe1_cond:{je:"aurais fini",tu:"aurais fini",il:"aurait fini",elle:"aurait fini",nous:"aurions fini",vous:"auriez fini",ils:"auraient fini",elles:"auraient fini"},
+      present_imp:{tu:"finis",nous:"finissons",vous:"finissez"},
+      present_part:{_:"finissant"},passe_part:{_:"fini"},present_inf:{_:"finir"},
+    }
+  },
+  {
+    inf:"venir",
+    forms:{
+      present_ind:{je:"viens",tu:"viens",il:"vient",elle:"vient",nous:"venons",vous:"venez",ils:"viennent",elles:"viennent"},
+      imparfait_ind:{je:"venais",tu:"venais",il:"venait",elle:"venait",nous:"venions",vous:"veniez",ils:"venaient",elles:"venaient"},
+      passe_simple:{je:"vins",tu:"vins",il:"vint",elle:"vint",nous:"vînmes",vous:"vîntes",ils:"vinrent",elles:"vinrent"},
+      futur_simple:{je:"viendrai",tu:"viendras",il:"viendra",elle:"viendra",nous:"viendrons",vous:"viendrez",ils:"viendront",elles:"viendront"},
+      passe_compose:{je:"suis venu",tu:"es venu",il:"est venu",elle:"est venue",nous:"sommes venus",vous:"êtes venus",ils:"sont venus",elles:"sont venues"},
+      plus_que_parfait:{je:"étais venu",tu:"étais venu",il:"était venu",elle:"était venue",nous:"étions venus",vous:"étiez venus",ils:"étaient venus",elles:"étaient venues"},
+      futur_anterieur:{je:"serai venu",tu:"seras venu",il:"sera venu",elle:"sera venue",nous:"serons venus",vous:"serez venus",ils:"seront venus",elles:"seront venues"},
+      passe_anterieur:{je:"fus venu",tu:"fus venu",il:"fut venu",elle:"fut venue",nous:"fûmes venus",vous:"fûtes venus",ils:"furent venus",elles:"furent venues"},
+      present_sub:{je:"vienne",tu:"viennes",il:"vienne",elle:"vienne",nous:"venions",vous:"veniez",ils:"viennent",elles:"viennent"},
+      imparfait_sub:{je:"vinsse",tu:"vinsses",il:"vînt",elle:"vînt",nous:"vinssions",vous:"vinssiez",ils:"vinssent",elles:"vinssent"},
+      passe_sub:{je:"sois venu",tu:"sois venu",il:"soit venu",elle:"soit venue",nous:"soyons venus",vous:"soyez venus",ils:"soient venus",elles:"soient venues"},
+      plus_que_parfait_sub:{je:"fusse venu",tu:"fusses venu",il:"fût venu",elle:"fût venue",nous:"fussions venus",vous:"fussiez venus",ils:"fussent venus",elles:"fussent venues"},
+      present_cond:{je:"viendrais",tu:"viendrais",il:"viendrait",elle:"viendrait",nous:"viendrions",vous:"viendriez",ils:"viendraient",elles:"viendraient"},
+      passe1_cond:{je:"serais venu",tu:"serais venu",il:"serait venu",elle:"serait venue",nous:"serions venus",vous:"seriez venus",ils:"seraient venus",elles:"seraient venues"},
+      present_imp:{tu:"viens",nous:"venons",vous:"venez"},
+      present_part:{_:"venant"},passe_part:{_:"venu"},present_inf:{_:"venir"},
+    }
+  },
+  {
+    inf:"avoir",
+    forms:{
+      present_ind:{je:"ai",tu:"as",il:"a",elle:"a",nous:"avons",vous:"avez",ils:"ont",elles:"ont"},
+      imparfait_ind:{je:"avais",tu:"avais",il:"avait",elle:"avait",nous:"avions",vous:"aviez",ils:"avaient",elles:"avaient"},
+      passe_simple:{je:"eus",tu:"eus",il:"eut",elle:"eut",nous:"eûmes",vous:"eûtes",ils:"eurent",elles:"eurent"},
+      futur_simple:{je:"aurai",tu:"auras",il:"aura",elle:"aura",nous:"aurons",vous:"aurez",ils:"auront",elles:"auront"},
+      passe_compose:{je:"ai eu",tu:"as eu",il:"a eu",elle:"a eu",nous:"avons eu",vous:"avez eu",ils:"ont eu",elles:"ont eu"},
+      plus_que_parfait:{je:"avais eu",tu:"avais eu",il:"avait eu",elle:"avait eu",nous:"avions eu",vous:"aviez eu",ils:"avaient eu",elles:"avaient eu"},
+      futur_anterieur:{je:"aurai eu",tu:"auras eu",il:"aura eu",elle:"aura eu",nous:"aurons eu",vous:"aurez eu",ils:"auront eu",elles:"auront eu"},
+      passe_anterieur:{je:"eus eu",tu:"eus eu",il:"eut eu",elle:"eut eu",nous:"eûmes eu",vous:"eûtes eu",ils:"eurent eu",elles:"eurent eu"},
+      present_sub:{je:"aie",tu:"aies",il:"ait",elle:"ait",nous:"ayons",vous:"ayez",ils:"aient",elles:"aient"},
+      imparfait_sub:{je:"eusse",tu:"eusses",il:"eût",elle:"eût",nous:"eussions",vous:"eussiez",ils:"eussent",elles:"eussent"},
+      passe_sub:{je:"aie eu",tu:"aies eu",il:"ait eu",elle:"ait eu",nous:"ayons eu",vous:"ayez eu",ils:"aient eu",elles:"aient eu"},
+      plus_que_parfait_sub:{je:"eusse eu",tu:"eusses eu",il:"eût eu",elle:"eût eu",nous:"eussions eu",vous:"eussiez eu",ils:"eussent eu",elles:"eussent eu"},
+      present_cond:{je:"aurais",tu:"aurais",il:"aurait",elle:"aurait",nous:"aurions",vous:"auriez",ils:"auraient",elles:"auraient"},
+      passe1_cond:{je:"aurais eu",tu:"aurais eu",il:"aurait eu",elle:"aurait eu",nous:"aurions eu",vous:"auriez eu",ils:"auraient eu",elles:"auraient eu"},
+      present_imp:{tu:"aie",nous:"ayons",vous:"ayez"},
+      present_part:{_:"ayant"},passe_part:{_:"eu"},present_inf:{_:"avoir"},
+    }
+  },
+  {
+    inf:"être",
+    forms:{
+      present_ind:{je:"suis",tu:"es",il:"est",elle:"est",nous:"sommes",vous:"êtes",ils:"sont",elles:"sont"},
+      imparfait_ind:{je:"étais",tu:"étais",il:"était",elle:"était",nous:"étions",vous:"étiez",ils:"étaient",elles:"étaient"},
+      passe_simple:{je:"fus",tu:"fus",il:"fut",elle:"fut",nous:"fûmes",vous:"fûtes",ils:"furent",elles:"furent"},
+      futur_simple:{je:"serai",tu:"seras",il:"sera",elle:"sera",nous:"serons",vous:"serez",ils:"seront",elles:"seront"},
+      passe_compose:{je:"ai été",tu:"as été",il:"a été",elle:"a été",nous:"avons été",vous:"avez été",ils:"ont été",elles:"ont été"},
+      plus_que_parfait:{je:"avais été",tu:"avais été",il:"avait été",elle:"avait été",nous:"avions été",vous:"aviez été",ils:"avaient été",elles:"avaient été"},
+      futur_anterieur:{je:"aurai été",tu:"auras été",il:"aura été",elle:"aura été",nous:"aurons été",vous:"aurez été",ils:"auront été",elles:"auront été"},
+      passe_anterieur:{je:"eus été",tu:"eus été",il:"eut été",elle:"eut été",nous:"eûmes été",vous:"eûtes été",ils:"eurent été",elles:"eurent été"},
+      present_sub:{je:"sois",tu:"sois",il:"soit",elle:"soit",nous:"soyons",vous:"soyez",ils:"soient",elles:"soient"},
+      imparfait_sub:{je:"fusse",tu:"fusses",il:"fût",elle:"fût",nous:"fussions",vous:"fussiez",ils:"fussent",elles:"fussent"},
+      passe_sub:{je:"aie été",tu:"aies été",il:"ait été",elle:"ait été",nous:"ayons été",vous:"ayez été",ils:"aient été",elles:"aient été"},
+      plus_que_parfait_sub:{je:"eusse été",tu:"eusses été",il:"eût été",elle:"eût été",nous:"eussions été",vous:"eussiez été",ils:"eussent été",elles:"eussent été"},
+      present_cond:{je:"serais",tu:"serais",il:"serait",elle:"serait",nous:"serions",vous:"seriez",ils:"seraient",elles:"seraient"},
+      passe1_cond:{je:"aurais été",tu:"aurais été",il:"aurait été",elle:"aurait été",nous:"aurions été",vous:"auriez été",ils:"auraient été",elles:"auraient été"},
+      present_imp:{tu:"sois",nous:"soyons",vous:"soyez"},
+      present_part:{_:"étant"},passe_part:{_:"été"},present_inf:{_:"être"},
+    }
+  },
+  {
+    inf:"aller",
+    forms:{
+      present_ind:{je:"vais",tu:"vas",il:"va",elle:"va",nous:"allons",vous:"allez",ils:"vont",elles:"vont"},
+      imparfait_ind:{je:"allais",tu:"allais",il:"allait",elle:"allait",nous:"allions",vous:"alliez",ils:"allaient",elles:"allaient"},
+      passe_simple:{je:"allai",tu:"allas",il:"alla",elle:"alla",nous:"allâmes",vous:"allâtes",ils:"allèrent",elles:"allèrent"},
+      futur_simple:{je:"irai",tu:"iras",il:"ira",elle:"ira",nous:"irons",vous:"irez",ils:"iront",elles:"iront"},
+      passe_compose:{je:"suis allé",tu:"es allé",il:"est allé",elle:"est allée",nous:"sommes allés",vous:"êtes allés",ils:"sont allés",elles:"sont allées"},
+      plus_que_parfait:{je:"étais allé",tu:"étais allé",il:"était allé",elle:"était allée",nous:"étions allés",vous:"étiez allés",ils:"étaient allés",elles:"étaient allées"},
+      futur_anterieur:{je:"serai allé",tu:"seras allé",il:"sera allé",elle:"sera allée",nous:"serons allés",vous:"serez allés",ils:"seront allés",elles:"seront allées"},
+      passe_anterieur:{je:"fus allé",tu:"fus allé",il:"fut allé",elle:"fut allée",nous:"fûmes allés",vous:"fûtes allés",ils:"furent allés",elles:"furent allées"},
+      present_sub:{je:"aille",tu:"ailles",il:"aille",elle:"aille",nous:"allions",vous:"alliez",ils:"aillent",elles:"aillent"},
+      imparfait_sub:{je:"allasse",tu:"allasses",il:"allât",elle:"allât",nous:"allassions",vous:"allassiez",ils:"allassent",elles:"allassent"},
+      passe_sub:{je:"sois allé",tu:"sois allé",il:"soit allé",elle:"soit allée",nous:"soyons allés",vous:"soyez allés",ils:"soient allés",elles:"soient allées"},
+      plus_que_parfait_sub:{je:"fusse allé",tu:"fusses allé",il:"fût allé",elle:"fût allée",nous:"fussions allés",vous:"fussiez allés",ils:"fussent allés",elles:"fussent allées"},
+      present_cond:{je:"irais",tu:"irais",il:"irait",elle:"irait",nous:"irions",vous:"iriez",ils:"iraient",elles:"iraient"},
+      passe1_cond:{je:"serais allé",tu:"serais allé",il:"serait allé",elle:"serait allée",nous:"serions allés",vous:"seriez allés",ils:"seraient allés",elles:"seraient allées"},
+      present_imp:{tu:"va",nous:"allons",vous:"allez"},
+      present_part:{_:"allant"},passe_part:{_:"allé"},present_inf:{_:"aller"},
+    }
+  },
+  {
+    inf:"faire",
+    forms:{
+      present_ind:{je:"fais",tu:"fais",il:"fait",elle:"fait",nous:"faisons",vous:"faites",ils:"font",elles:"font"},
+      imparfait_ind:{je:"faisais",tu:"faisais",il:"faisait",elle:"faisait",nous:"faisions",vous:"faisiez",ils:"faisaient",elles:"faisaient"},
+      passe_simple:{je:"fis",tu:"fis",il:"fit",elle:"fit",nous:"fîmes",vous:"fîtes",ils:"firent",elles:"firent"},
+      futur_simple:{je:"ferai",tu:"feras",il:"fera",elle:"fera",nous:"ferons",vous:"ferez",ils:"feront",elles:"feront"},
+      passe_compose:{je:"ai fait",tu:"as fait",il:"a fait",elle:"a fait",nous:"avons fait",vous:"avez fait",ils:"ont fait",elles:"ont fait"},
+      plus_que_parfait:{je:"avais fait",tu:"avais fait",il:"avait fait",elle:"avait fait",nous:"avions fait",vous:"aviez fait",ils:"avaient fait",elles:"avaient fait"},
+      futur_anterieur:{je:"aurai fait",tu:"auras fait",il:"aura fait",elle:"aura fait",nous:"aurons fait",vous:"aurez fait",ils:"auront fait",elles:"auront fait"},
+      passe_anterieur:{je:"eus fait",tu:"eus fait",il:"eut fait",elle:"eut fait",nous:"eûmes fait",vous:"eûtes fait",ils:"eurent fait",elles:"eurent fait"},
+      present_sub:{je:"fasse",tu:"fasses",il:"fasse",elle:"fasse",nous:"fassions",vous:"fassiez",ils:"fassent",elles:"fassent"},
+      imparfait_sub:{je:"fisse",tu:"fisses",il:"fît",elle:"fît",nous:"fissions",vous:"fissiez",ils:"fissent",elles:"fissent"},
+      passe_sub:{je:"aie fait",tu:"aies fait",il:"ait fait",elle:"ait fait",nous:"ayons fait",vous:"ayez fait",ils:"aient fait",elles:"aient fait"},
+      plus_que_parfait_sub:{je:"eusse fait",tu:"eusses fait",il:"eût fait",elle:"eût fait",nous:"eussions fait",vous:"eussiez fait",ils:"eussent fait",elles:"eussent fait"},
+      present_cond:{je:"ferais",tu:"ferais",il:"ferait",elle:"ferait",nous:"ferions",vous:"feriez",ils:"feraient",elles:"feraient"},
+      passe1_cond:{je:"aurais fait",tu:"aurais fait",il:"aurait fait",elle:"aurait fait",nous:"aurions fait",vous:"auriez fait",ils:"auraient fait",elles:"auraient fait"},
+      present_imp:{tu:"fais",nous:"faisons",vous:"faites"},
+      present_part:{_:"faisant"},passe_part:{_:"fait"},present_inf:{_:"faire"},
+    }
+  },
+  {
+    inf:"prendre",
+    forms:{
+      present_ind:{je:"prends",tu:"prends",il:"prend",elle:"prend",nous:"prenons",vous:"prenez",ils:"prennent",elles:"prennent"},
+      imparfait_ind:{je:"prenais",tu:"prenais",il:"prenait",elle:"prenait",nous:"prenions",vous:"preniez",ils:"prenaient",elles:"prenaient"},
+      passe_simple:{je:"pris",tu:"pris",il:"prit",elle:"prit",nous:"prîmes",vous:"prîtes",ils:"prirent",elles:"prirent"},
+      futur_simple:{je:"prendrai",tu:"prendras",il:"prendra",elle:"prendra",nous:"prendrons",vous:"prendrez",ils:"prendront",elles:"prendront"},
+      passe_compose:{je:"ai pris",tu:"as pris",il:"a pris",elle:"a pris",nous:"avons pris",vous:"avez pris",ils:"ont pris",elles:"ont pris"},
+      plus_que_parfait:{je:"avais pris",tu:"avais pris",il:"avait pris",elle:"avait pris",nous:"avions pris",vous:"aviez pris",ils:"avaient pris",elles:"avaient pris"},
+      futur_anterieur:{je:"aurai pris",tu:"auras pris",il:"aura pris",elle:"aura pris",nous:"aurons pris",vous:"aurez pris",ils:"auront pris",elles:"auront pris"},
+      passe_anterieur:{je:"eus pris",tu:"eus pris",il:"eut pris",elle:"eut pris",nous:"eûmes pris",vous:"eûtes pris",ils:"eurent pris",elles:"eurent pris"},
+      present_sub:{je:"prenne",tu:"prennes",il:"prenne",elle:"prenne",nous:"prenions",vous:"preniez",ils:"prennent",elles:"prennent"},
+      imparfait_sub:{je:"prisse",tu:"prisses",il:"prît",elle:"prît",nous:"prissions",vous:"prissiez",ils:"prissent",elles:"prissent"},
+      passe_sub:{je:"aie pris",tu:"aies pris",il:"ait pris",elle:"ait pris",nous:"ayons pris",vous:"ayez pris",ils:"aient pris",elles:"aient pris"},
+      plus_que_parfait_sub:{je:"eusse pris",tu:"eusses pris",il:"eût pris",elle:"eût pris",nous:"eussions pris",vous:"eussiez pris",ils:"eussent pris",elles:"eussent pris"},
+      present_cond:{je:"prendrais",tu:"prendrais",il:"prendrait",elle:"prendrait",nous:"prendrions",vous:"prendriez",ils:"prendraient",elles:"prendraient"},
+      passe1_cond:{je:"aurais pris",tu:"aurais pris",il:"aurait pris",elle:"aurait pris",nous:"aurions pris",vous:"auriez pris",ils:"auraient pris",elles:"auraient pris"},
+      present_imp:{tu:"prends",nous:"prenons",vous:"prenez"},
+      present_part:{_:"prenant"},passe_part:{_:"pris"},present_inf:{_:"prendre"},
+    }
+  },
+  {
+    inf:"pouvoir",
+    forms:{
+      present_ind:{je:"peux",tu:"peux",il:"peut",elle:"peut",nous:"pouvons",vous:"pouvez",ils:"peuvent",elles:"peuvent"},
+      imparfait_ind:{je:"pouvais",tu:"pouvais",il:"pouvait",elle:"pouvait",nous:"pouvions",vous:"pouviez",ils:"pouvaient",elles:"pouvaient"},
+      passe_simple:{je:"pus",tu:"pus",il:"put",elle:"put",nous:"pûmes",vous:"pûtes",ils:"purent",elles:"purent"},
+      futur_simple:{je:"pourrai",tu:"pourras",il:"pourra",elle:"pourra",nous:"pourrons",vous:"pourrez",ils:"pourront",elles:"pourront"},
+      passe_compose:{je:"ai pu",tu:"as pu",il:"a pu",elle:"a pu",nous:"avons pu",vous:"avez pu",ils:"ont pu",elles:"ont pu"},
+      plus_que_parfait:{je:"avais pu",tu:"avais pu",il:"avait pu",elle:"avait pu",nous:"avions pu",vous:"aviez pu",ils:"avaient pu",elles:"avaient pu"},
+      futur_anterieur:{je:"aurai pu",tu:"auras pu",il:"aura pu",elle:"aura pu",nous:"aurons pu",vous:"aurez pu",ils:"auront pu",elles:"auront pu"},
+      passe_anterieur:{je:"eus pu",tu:"eus pu",il:"eut pu",elle:"eut pu",nous:"eûmes pu",vous:"eûtes pu",ils:"eurent pu",elles:"eurent pu"},
+      present_sub:{je:"puisse",tu:"puisses",il:"puisse",elle:"puisse",nous:"puissions",vous:"puissiez",ils:"puissent",elles:"puissent"},
+      imparfait_sub:{je:"pusse",tu:"pusses",il:"pût",elle:"pût",nous:"pussions",vous:"pussiez",ils:"pussent",elles:"pussent"},
+      passe_sub:{je:"aie pu",tu:"aies pu",il:"ait pu",elle:"ait pu",nous:"ayons pu",vous:"ayez pu",ils:"aient pu",elles:"aient pu"},
+      plus_que_parfait_sub:{je:"eusse pu",tu:"eusses pu",il:"eût pu",elle:"eût pu",nous:"eussions pu",vous:"eussiez pu",ils:"eussent pu",elles:"eussent pu"},
+      present_cond:{je:"pourrais",tu:"pourrais",il:"pourrait",elle:"pourrait",nous:"pourrions",vous:"pourriez",ils:"pourraient",elles:"pourraient"},
+      passe1_cond:{je:"aurais pu",tu:"aurais pu",il:"aurait pu",elle:"aurait pu",nous:"aurions pu",vous:"auriez pu",ils:"auraient pu",elles:"auraient pu"},
+      present_imp:{},
+      present_part:{_:"pouvant"},passe_part:{_:"pu"},present_inf:{_:"pouvoir"},
+    }
+  },
+  {
+    inf:"vouloir",
+    forms:{
+      present_ind:{je:"veux",tu:"veux",il:"veut",elle:"veut",nous:"voulons",vous:"voulez",ils:"veulent",elles:"veulent"},
+      imparfait_ind:{je:"voulais",tu:"voulais",il:"voulait",elle:"voulait",nous:"voulions",vous:"vouliez",ils:"voulaient",elles:"voulaient"},
+      passe_simple:{je:"voulus",tu:"voulus",il:"voulut",elle:"voulut",nous:"voulûmes",vous:"voulûtes",ils:"voulurent",elles:"voulurent"},
+      futur_simple:{je:"voudrai",tu:"voudras",il:"voudra",elle:"voudra",nous:"voudrons",vous:"voudrez",ils:"voudront",elles:"voudront"},
+      passe_compose:{je:"ai voulu",tu:"as voulu",il:"a voulu",elle:"a voulu",nous:"avons voulu",vous:"avez voulu",ils:"ont voulu",elles:"ont voulu"},
+      plus_que_parfait:{je:"avais voulu",tu:"avais voulu",il:"avait voulu",elle:"avait voulu",nous:"avions voulu",vous:"aviez voulu",ils:"avaient voulu",elles:"avaient voulu"},
+      futur_anterieur:{je:"aurai voulu",tu:"auras voulu",il:"aura voulu",elle:"aura voulu",nous:"aurons voulu",vous:"aurez voulu",ils:"auront voulu",elles:"auront voulu"},
+      passe_anterieur:{je:"eus voulu",tu:"eus voulu",il:"eut voulu",elle:"eut voulu",nous:"eûmes voulu",vous:"eûtes voulu",ils:"eurent voulu",elles:"eurent voulu"},
+      present_sub:{je:"veuille",tu:"veuilles",il:"veuille",elle:"veuille",nous:"voulions",vous:"vouliez",ils:"veuillent",elles:"veuillent"},
+      imparfait_sub:{je:"voulusse",tu:"voulusses",il:"voulût",elle:"voulût",nous:"voulussions",vous:"voulussiez",ils:"voulussent",elles:"voulussent"},
+      passe_sub:{je:"aie voulu",tu:"aies voulu",il:"ait voulu",elle:"ait voulu",nous:"ayons voulu",vous:"ayez voulu",ils:"aient voulu",elles:"aient voulu"},
+      plus_que_parfait_sub:{je:"eusse voulu",tu:"eusses voulu",il:"eût voulu",elle:"eût voulu",nous:"eussions voulu",vous:"eussiez voulu",ils:"eussent voulu",elles:"eussent voulu"},
+      present_cond:{je:"voudrais",tu:"voudrais",il:"voudrait",elle:"voudrait",nous:"voudrions",vous:"voudriez",ils:"voudraient",elles:"voudraient"},
+      passe1_cond:{je:"aurais voulu",tu:"aurais voulu",il:"aurait voulu",elle:"aurait voulu",nous:"aurions voulu",vous:"auriez voulu",ils:"auraient voulu",elles:"auraient voulu"},
+      present_imp:{tu:"veuille",nous:"voulons",vous:"veuillez"},
+      present_part:{_:"voulant"},passe_part:{_:"voulu"},present_inf:{_:"vouloir"},
+    }
+  },
+  {
+    inf:"savoir",
+    forms:{
+      present_ind:{je:"sais",tu:"sais",il:"sait",elle:"sait",nous:"savons",vous:"savez",ils:"savent",elles:"savent"},
+      imparfait_ind:{je:"savais",tu:"savais",il:"savait",elle:"savait",nous:"savions",vous:"saviez",ils:"savaient",elles:"savaient"},
+      passe_simple:{je:"sus",tu:"sus",il:"sut",elle:"sut",nous:"sûmes",vous:"sûtes",ils:"surent",elles:"surent"},
+      futur_simple:{je:"saurai",tu:"sauras",il:"saura",elle:"saura",nous:"saurons",vous:"saurez",ils:"sauront",elles:"sauront"},
+      passe_compose:{je:"ai su",tu:"as su",il:"a su",elle:"a su",nous:"avons su",vous:"avez su",ils:"ont su",elles:"ont su"},
+      plus_que_parfait:{je:"avais su",tu:"avais su",il:"avait su",elle:"avait su",nous:"avions su",vous:"aviez su",ils:"avaient su",elles:"avaient su"},
+      futur_anterieur:{je:"aurai su",tu:"auras su",il:"aura su",elle:"aura su",nous:"aurons su",vous:"aurez su",ils:"auront su",elles:"auront su"},
+      passe_anterieur:{je:"eus su",tu:"eus su",il:"eut su",elle:"eut su",nous:"eûmes su",vous:"eûtes su",ils:"eurent su",elles:"eurent su"},
+      present_sub:{je:"sache",tu:"saches",il:"sache",elle:"sache",nous:"sachions",vous:"sachiez",ils:"sachent",elles:"sachent"},
+      imparfait_sub:{je:"susse",tu:"susses",il:"sût",elle:"sût",nous:"sussions",vous:"sussiez",ils:"sussent",elles:"sussent"},
+      passe_sub:{je:"aie su",tu:"aies su",il:"ait su",elle:"ait su",nous:"ayons su",vous:"ayez su",ils:"aient su",elles:"aient su"},
+      plus_que_parfait_sub:{je:"eusse su",tu:"eusses su",il:"eût su",elle:"eût su",nous:"eussions su",vous:"eussiez su",ils:"eussent su",elles:"eussent su"},
+      present_cond:{je:"saurais",tu:"saurais",il:"saurait",elle:"saurait",nous:"saurions",vous:"sauriez",ils:"sauraient",elles:"sauraient"},
+      passe1_cond:{je:"aurais su",tu:"aurais su",il:"aurait su",elle:"aurait su",nous:"aurions su",vous:"auriez su",ils:"auraient su",elles:"auraient su"},
+      present_imp:{tu:"sache",nous:"sachons",vous:"sachez"},
+      present_part:{_:"sachant"},passe_part:{_:"su"},present_inf:{_:"savoir"},
+    }
+  },
+  {
+    inf:"dire",
+    forms:{
+      present_ind:{je:"dis",tu:"dis",il:"dit",elle:"dit",nous:"disons",vous:"dites",ils:"disent",elles:"disent"},
+      imparfait_ind:{je:"disais",tu:"disais",il:"disait",elle:"disait",nous:"disions",vous:"disiez",ils:"disaient",elles:"disaient"},
+      passe_simple:{je:"dis",tu:"dis",il:"dit",elle:"dit",nous:"dîmes",vous:"dîtes",ils:"dirent",elles:"dirent"},
+      futur_simple:{je:"dirai",tu:"diras",il:"dira",elle:"dira",nous:"dirons",vous:"direz",ils:"diront",elles:"diront"},
+      passe_compose:{je:"ai dit",tu:"as dit",il:"a dit",elle:"a dit",nous:"avons dit",vous:"avez dit",ils:"ont dit",elles:"ont dit"},
+      plus_que_parfait:{je:"avais dit",tu:"avais dit",il:"avait dit",elle:"avait dit",nous:"avions dit",vous:"aviez dit",ils:"avaient dit",elles:"avaient dit"},
+      futur_anterieur:{je:"aurai dit",tu:"auras dit",il:"aura dit",elle:"aura dit",nous:"aurons dit",vous:"aurez dit",ils:"auront dit",elles:"auront dit"},
+      passe_anterieur:{je:"eus dit",tu:"eus dit",il:"eut dit",elle:"eut dit",nous:"eûmes dit",vous:"eûtes dit",ils:"eurent dit",elles:"eurent dit"},
+      present_sub:{je:"dise",tu:"dises",il:"dise",elle:"dise",nous:"disions",vous:"disiez",ils:"disent",elles:"disent"},
+      imparfait_sub:{je:"disse",tu:"disses",il:"dît",elle:"dît",nous:"dissions",vous:"dissiez",ils:"dissent",elles:"dissent"},
+      passe_sub:{je:"aie dit",tu:"aies dit",il:"ait dit",elle:"ait dit",nous:"ayons dit",vous:"ayez dit",ils:"aient dit",elles:"aient dit"},
+      plus_que_parfait_sub:{je:"eusse dit",tu:"eusses dit",il:"eût dit",elle:"eût dit",nous:"eussions dit",vous:"eussiez dit",ils:"eussent dit",elles:"eussent dit"},
+      present_cond:{je:"dirais",tu:"dirais",il:"dirait",elle:"dirait",nous:"dirions",vous:"diriez",ils:"diraient",elles:"diraient"},
+      passe1_cond:{je:"aurais dit",tu:"aurais dit",il:"aurait dit",elle:"aurait dit",nous:"aurions dit",vous:"auriez dit",ils:"auraient dit",elles:"auraient dit"},
+      present_imp:{tu:"dis",nous:"disons",vous:"dites"},
+      present_part:{_:"disant"},passe_part:{_:"dit"},present_inf:{_:"dire"},
+    }
+  },
+  {
+    inf:"voir",
+    forms:{
+      present_ind:{je:"vois",tu:"vois",il:"voit",elle:"voit",nous:"voyons",vous:"voyez",ils:"voient",elles:"voient"},
+      imparfait_ind:{je:"voyais",tu:"voyais",il:"voyait",elle:"voyait",nous:"voyions",vous:"voyiez",ils:"voyaient",elles:"voyaient"},
+      passe_simple:{je:"vis",tu:"vis",il:"vit",elle:"vit",nous:"vîmes",vous:"vîtes",ils:"virent",elles:"virent"},
+      futur_simple:{je:"verrai",tu:"verras",il:"verra",elle:"verra",nous:"verrons",vous:"verrez",ils:"verront",elles:"verront"},
+      passe_compose:{je:"ai vu",tu:"as vu",il:"a vu",elle:"a vu",nous:"avons vu",vous:"avez vu",ils:"ont vu",elles:"ont vu"},
+      plus_que_parfait:{je:"avais vu",tu:"avais vu",il:"avait vu",elle:"avait vu",nous:"avions vu",vous:"aviez vu",ils:"avaient vu",elles:"avaient vu"},
+      futur_anterieur:{je:"aurai vu",tu:"auras vu",il:"aura vu",elle:"aura vu",nous:"aurons vu",vous:"aurez vu",ils:"auront vu",elles:"auront vu"},
+      passe_anterieur:{je:"eus vu",tu:"eus vu",il:"eut vu",elle:"eut vu",nous:"eûmes vu",vous:"eûtes vu",ils:"eurent vu",elles:"eurent vu"},
+      present_sub:{je:"voie",tu:"voies",il:"voie",elle:"voie",nous:"voyions",vous:"voyiez",ils:"voient",elles:"voient"},
+      imparfait_sub:{je:"visse",tu:"visses",il:"vît",elle:"vît",nous:"vissions",vous:"vissiez",ils:"vissent",elles:"vissent"},
+      passe_sub:{je:"aie vu",tu:"aies vu",il:"ait vu",elle:"ait vu",nous:"ayons vu",vous:"ayez vu",ils:"aient vu",elles:"aient vu"},
+      plus_que_parfait_sub:{je:"eusse vu",tu:"eusses vu",il:"eût vu",elle:"eût vu",nous:"eussions vu",vous:"eussiez vu",ils:"eussent vu",elles:"eussent vu"},
+      present_cond:{je:"verrais",tu:"verrais",il:"verrait",elle:"verrait",nous:"verrions",vous:"verriez",ils:"verraient",elles:"verraient"},
+      passe1_cond:{je:"aurais vu",tu:"aurais vu",il:"aurait vu",elle:"aurait vu",nous:"aurions vu",vous:"auriez vu",ils:"auraient vu",elles:"auraient vu"},
+      present_imp:{tu:"vois",nous:"voyons",vous:"voyez"},
+      present_part:{_:"voyant"},passe_part:{_:"vu"},present_inf:{_:"voir"},
+    }
+  },
+  {
+    inf:"partir",
+    forms:{
+      present_ind:{je:"pars",tu:"pars",il:"part",elle:"part",nous:"partons",vous:"partez",ils:"partent",elles:"partent"},
+      imparfait_ind:{je:"partais",tu:"partais",il:"partait",elle:"partait",nous:"partions",vous:"partiez",ils:"partaient",elles:"partaient"},
+      passe_simple:{je:"partis",tu:"partis",il:"partit",elle:"partit",nous:"partîmes",vous:"partîtes",ils:"partirent",elles:"partirent"},
+      futur_simple:{je:"partirai",tu:"partiras",il:"partira",elle:"partira",nous:"partirons",vous:"partirez",ils:"partiront",elles:"partiront"},
+      passe_compose:{je:"suis parti",tu:"es parti",il:"est parti",elle:"est partie",nous:"sommes partis",vous:"êtes partis",ils:"sont partis",elles:"sont parties"},
+      plus_que_parfait:{je:"étais parti",tu:"étais parti",il:"était parti",elle:"était partie",nous:"étions partis",vous:"étiez partis",ils:"étaient partis",elles:"étaient parties"},
+      futur_anterieur:{je:"serai parti",tu:"seras parti",il:"sera parti",elle:"sera partie",nous:"serons partis",vous:"serez partis",ils:"seront partis",elles:"seront parties"},
+      passe_anterieur:{je:"fus parti",tu:"fus parti",il:"fut parti",elle:"fut partie",nous:"fûmes partis",vous:"fûtes partis",ils:"furent partis",elles:"furent parties"},
+      present_sub:{je:"parte",tu:"partes",il:"parte",elle:"parte",nous:"partions",vous:"partiez",ils:"partent",elles:"partent"},
+      imparfait_sub:{je:"partisse",tu:"partisses",il:"partît",elle:"partît",nous:"partissions",vous:"partissiez",ils:"partissent",elles:"partissent"},
+      passe_sub:{je:"sois parti",tu:"sois parti",il:"soit parti",elle:"soit partie",nous:"soyons partis",vous:"soyez partis",ils:"soient partis",elles:"soient parties"},
+      plus_que_parfait_sub:{je:"fusse parti",tu:"fusses parti",il:"fût parti",elle:"fût partie",nous:"fussions partis",vous:"fussiez partis",ils:"fussent partis",elles:"fussent parties"},
+      present_cond:{je:"partirais",tu:"partirais",il:"partirait",elle:"partirait",nous:"partirions",vous:"partiriez",ils:"partiraient",elles:"partiraient"},
+      passe1_cond:{je:"serais parti",tu:"serais parti",il:"serait parti",elle:"serait partie",nous:"serions partis",vous:"seriez partis",ils:"seraient partis",elles:"seraient parties"},
+      present_imp:{tu:"pars",nous:"partons",vous:"partez"},
+      present_part:{_:"partant"},passe_part:{_:"parti"},present_inf:{_:"partir"},
+    }
+  },
+  {
+    inf:"lire",
+    forms:{
+      present_ind:{je:"lis",tu:"lis",il:"lit",elle:"lit",nous:"lisons",vous:"lisez",ils:"lisent",elles:"lisent"},
+      imparfait_ind:{je:"lisais",tu:"lisais",il:"lisait",elle:"lisait",nous:"lisions",vous:"lisiez",ils:"lisaient",elles:"lisaient"},
+      passe_simple:{je:"lus",tu:"lus",il:"lut",elle:"lut",nous:"lûmes",vous:"lûtes",ils:"lurent",elles:"lurent"},
+      futur_simple:{je:"lirai",tu:"liras",il:"lira",elle:"lira",nous:"lirons",vous:"lirez",ils:"liront",elles:"liront"},
+      passe_compose:{je:"ai lu",tu:"as lu",il:"a lu",elle:"a lu",nous:"avons lu",vous:"avez lu",ils:"ont lu",elles:"ont lu"},
+      plus_que_parfait:{je:"avais lu",tu:"avais lu",il:"avait lu",elle:"avait lu",nous:"avions lu",vous:"aviez lu",ils:"avaient lu",elles:"avaient lu"},
+      futur_anterieur:{je:"aurai lu",tu:"auras lu",il:"aura lu",elle:"aura lu",nous:"aurons lu",vous:"aurez lu",ils:"auront lu",elles:"auront lu"},
+      passe_anterieur:{je:"eus lu",tu:"eus lu",il:"eut lu",elle:"eut lu",nous:"eûmes lu",vous:"eûtes lu",ils:"eurent lu",elles:"eurent lu"},
+      present_sub:{je:"lise",tu:"lises",il:"lise",elle:"lise",nous:"lisions",vous:"lisiez",ils:"lisent",elles:"lisent"},
+      imparfait_sub:{je:"lusse",tu:"lusses",il:"lût",elle:"lût",nous:"lussions",vous:"lussiez",ils:"lussent",elles:"lussent"},
+      passe_sub:{je:"aie lu",tu:"aies lu",il:"ait lu",elle:"ait lu",nous:"ayons lu",vous:"ayez lu",ils:"aient lu",elles:"aient lu"},
+      plus_que_parfait_sub:{je:"eusse lu",tu:"eusses lu",il:"eût lu",elle:"eût lu",nous:"eussions lu",vous:"eussiez lu",ils:"eussent lu",elles:"eussent lu"},
+      present_cond:{je:"lirais",tu:"lirais",il:"lirait",elle:"lirait",nous:"lirions",vous:"liriez",ils:"liraient",elles:"liraient"},
+      passe1_cond:{je:"aurais lu",tu:"aurais lu",il:"aurait lu",elle:"aurait lu",nous:"aurions lu",vous:"auriez lu",ils:"auraient lu",elles:"auraient lu"},
+      present_imp:{tu:"lis",nous:"lisons",vous:"lisez"},
+      present_part:{_:"lisant"},passe_part:{_:"lu"},present_inf:{_:"lire"},
+    }
+  },
+  {
+    inf:"écrire",
+    forms:{
+      present_ind:{je:"écris",tu:"écris",il:"écrit",elle:"écrit",nous:"écrivons",vous:"écrivez",ils:"écrivent",elles:"écrivent"},
+      imparfait_ind:{je:"écrivais",tu:"écrivais",il:"écrivait",elle:"écrivait",nous:"écrivions",vous:"écriviez",ils:"écrivaient",elles:"écrivaient"},
+      passe_simple:{je:"écrivis",tu:"écrivis",il:"écrivit",elle:"écrivit",nous:"écrivîmes",vous:"écrivîtes",ils:"écrivirent",elles:"écrivirent"},
+      futur_simple:{je:"écrirai",tu:"écriras",il:"écrira",elle:"écrira",nous:"écrirons",vous:"écrirez",ils:"écriront",elles:"écriront"},
+      passe_compose:{je:"ai écrit",tu:"as écrit",il:"a écrit",elle:"a écrit",nous:"avons écrit",vous:"avez écrit",ils:"ont écrit",elles:"ont écrit"},
+      plus_que_parfait:{je:"avais écrit",tu:"avais écrit",il:"avait écrit",elle:"avait écrit",nous:"avions écrit",vous:"aviez écrit",ils:"avaient écrit",elles:"avaient écrit"},
+      futur_anterieur:{je:"aurai écrit",tu:"auras écrit",il:"aura écrit",elle:"aura écrit",nous:"aurons écrit",vous:"aurez écrit",ils:"auront écrit",elles:"auront écrit"},
+      passe_anterieur:{je:"eus écrit",tu:"eus écrit",il:"eut écrit",elle:"eut écrit",nous:"eûmes écrit",vous:"eûtes écrit",ils:"eurent écrit",elles:"eurent écrit"},
+      present_sub:{je:"écrive",tu:"écrives",il:"écrive",elle:"écrive",nous:"écrivions",vous:"écriviez",ils:"écrivent",elles:"écrivent"},
+      imparfait_sub:{je:"écrivisse",tu:"écrivisses",il:"écrivît",elle:"écrivît",nous:"écrivissions",vous:"écrivissiez",ils:"écrivissent",elles:"écrivissent"},
+      passe_sub:{je:"aie écrit",tu:"aies écrit",il:"ait écrit",elle:"ait écrit",nous:"ayons écrit",vous:"ayez écrit",ils:"aient écrit",elles:"aient écrit"},
+      plus_que_parfait_sub:{je:"eusse écrit",tu:"eusses écrit",il:"eût écrit",elle:"eût écrit",nous:"eussions écrit",vous:"eussiez écrit",ils:"eussent écrit",elles:"eussent écrit"},
+      present_cond:{je:"écrirais",tu:"écrirais",il:"écrirait",elle:"écrirait",nous:"écririons",vous:"écririez",ils:"écriraient",elles:"écriraient"},
+      passe1_cond:{je:"aurais écrit",tu:"aurais écrit",il:"aurait écrit",elle:"aurait écrit",nous:"aurions écrit",vous:"auriez écrit",ils:"auraient écrit",elles:"auraient écrit"},
+      present_imp:{tu:"écris",nous:"écrivons",vous:"écrivez"},
+      present_part:{_:"écrivant"},passe_part:{_:"écrit"},present_inf:{_:"écrire"},
+    }
+  },
+];
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function rand(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function getPronouns(id){ if(id==="present_imp") return IMP_PRONOUNS; if(NODECL.includes(id)) return ["_"]; return PRONOUNS; }
+function pickQuestion(tenses){
+  const verb=rand(VERBS); const tId=rand(tenses);
+  const prons=getPronouns(tId).filter(p=>verb.forms[tId]?.[p]);
+  if(!prons.length) return pickQuestion(tenses);
+  const pron=rand(prons); const form=verb.forms[tId][pron];
+  return {verb:verb.inf,tenseId:tId,pronoun:pron,form};
+}
+function buildChoices(correctId,tenses){
+  const others=tenses.filter(id=>id!==correctId).sort(()=>Math.random()-0.5).slice(0,3);
+  return [...others,correctId].sort(()=>Math.random()-0.5);
+}
+function getTense(id){ return ALL_TENSES.find(t=>t.id===id); }
+
+const DEFAULT_ACTIVE=["present_ind","imparfait_ind","futur_simple","passe_compose","present_cond"];
+const TEACHER_CODE="teacher";
+const BALISEE_DEFAULT=["present_ind","imparfait_ind","passe_compose","futur_simple"];
+
+// ─── COLORS ───────────────────────────────────────────────────────────────────
+const C = {
+  bg:       "#0d1117",
+  surface:  "#161b22",
+  surface2: "#1c2330",
+  border:   "#30363d",
+  accent:   "#4f9cf9",
+  accentDim:"rgba(79,156,249,0.15)",
+  text:     "#e6edf3",
+  textMid:  "#8b949e",
+  textDim:  "#484f58",
+  green:    "#3fb950",
+  greenDim: "rgba(63,185,80,0.15)",
+  red:      "#f85149",
+  redDim:   "rgba(248,81,73,0.12)",
+  gold:     "#d29922",
+  goldDim:  "rgba(210,153,34,0.15)",
+};
+
+// ─── APP ─────────────────────────────────────────────────────────────────────
+function App(){
+  const [screen,setScreen]=useState("home");
+  const [mode,setMode]=useState(null); // "libre" | "balisee"
+  const [prenom,setPrenom]=useState("");
+  const [teacherCode,setTeacherCode]=useState("");
+  const [teacherError,setTeacherError]=useState(false);
+  const [baliseedTenses,setBaliseedTenses]=useState(BALISEE_DEFAULT);
+  const [teacherUnlocked,setTeacherUnlocked]=useState(false);
+  const [activeTenses,setActiveTenses]=useState(DEFAULT_ACTIVE);
+  const [maxQ,setMaxQ]=useState(10);
+  const [q,setQ]=useState(null);
+  const [choices,setChoices]=useState([]);
+  const [answered,setAnswered]=useState(null);
+  const [chosen,setChosen]=useState(null);
+  const [score,setScore]=useState(0);       // bonnes réponses brutes
+  const [total,setTotal]=useState(0);
+  const [streak,setStreak]=useState(0);
+  const [bestStreak,setBestStreak]=useState(0);
+  const [timeLeft,setTimeLeft]=useState(0); // chrono global affiché
+  const [qTimeLeft,setQTimeLeft]=useState(8); // chrono par question
+  const [gameOver,setGameOver]=useState(false);
+  const [speedBonuses,setSpeedBonuses]=useState([]); // bonus vitesse par bonne réponse [0..1]
+  const [sendStatus,setSendStatus]=useState(null); // null | "sending" | "ok" | "error"
+  const timerRef=useRef(null);
+
+  const SHEET_URL="https://script.google.com/macros/s/AKfycbzKX57-f1eSW_9ay8iv2F0NGuPfHnkxwRbhr9h8mFrzQ9FnfzJGYibVEzMC2aK8yk52/exec";
+
+  const sendToSheet=(p,s100,sc,tot)=>{
+    setSendStatus("sending");
+    const precision=tot>0?Math.round(sc/tot*100):0;
+    fetch(SHEET_URL,{
+      method:"POST",
+      mode:"no-cors",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({prenom:p,score100:s100,score:sc,total:tot,precision,mode:"balisee"}),
+    })
+    .then(()=>setSendStatus("ok"))
+    .catch(()=>setSendStatus("error"));
+  };
+  const qTimerRef=useRef(null);
+  const qTimeRef=useRef(8); // valeur live du chrono question
+
+  // Score /100 : chaque bonne réponse = (60/maxQ) pts justesse + bonus_vitesse*(40/maxQ) pts
+  // Fausse réponse = 0 pt. Tout bon + tout instantané = 100. Toujours juste.
+  const computeScore100=(bonuses,nq)=>{
+    if(nq===0) return 0;
+    const justessePts = bonuses.length * (60/nq);
+    const rapiditePts = bonuses.reduce((a,b)=>a+b,0) * (40/nq);
+    return Math.round(justessePts + rapiditePts);
+  };
+  const score100=computeScore100(speedBonuses,maxQ);
+
+  const stopTimer=()=>{
+    if(timerRef.current) clearInterval(timerRef.current);
+    if(qTimerRef.current) clearInterval(qTimerRef.current);
+  };
+
+  const startQTimer=()=>{
+    if(qTimerRef.current) clearInterval(qTimerRef.current);
+    qTimeRef.current=8;
+    setQTimeLeft(8);
+    qTimerRef.current=setInterval(()=>{
+      qTimeRef.current=qTimeRef.current-1;
+      setQTimeLeft(qTimeRef.current);
+      if(qTimeRef.current<=0){
+        clearInterval(qTimerRef.current);
+        // temps écoulé sur cette question = mauvaise réponse automatique
+        setAnswered("wrong");
+        setChosen("__timeout__");
+        setTotal(t=>{
+          const nt=t+1;
+          if(nt>=maxQ){ stopTimer(); setTimeout(()=>setGameOver(true),900); }
+          return nt;
+        });
+        setStreak(0);
+      }
+    },1000);
+  };
+
+  const nextQ=useCallback((tenses,t=activeTenses)=>{
+    const question=pickQuestion(tenses||t);
+    setQ(question);
+    setChoices(buildChoices(question.tenseId,tenses||t));
+    setAnswered(null);
+    setChosen(null);
+    startQTimer();
+  },[activeTenses]);
+
+  const startGame=(tensesToUse)=>{
+    const tenses=tensesToUse||activeTenses;
+    stopTimer();
+    setScore(0);setTotal(0);setStreak(0);setBestStreak(0);setSpeedBonuses([]);setSendStatus(null);
+    setGameOver(false);
+    const duration=maxQ*8;
+    setTimeLeft(duration);
+    setScreen("game");
+    // global timer (affichage)
+    timerRef.current=setInterval(()=>{
+      setTimeLeft(prev=>{
+        if(prev<=1){ stopTimer(); setGameOver(true); return 0; }
+        return prev-1;
+      });
+    },1000);
+    // first question (nextQ starts its own qTimer)
+    const question=pickQuestion(tenses);
+    setQ(question);
+    setChoices(buildChoices(question.tenseId,tenses));
+    setAnswered(null);
+    setChosen(null);
+    // start q timer
+    qTimeRef.current=8;
+    setQTimeLeft(8);
+    qTimerRef.current=setInterval(()=>{
+      qTimeRef.current=qTimeRef.current-1;
+      setQTimeLeft(qTimeRef.current);
+      if(qTimeRef.current<=0){
+        clearInterval(qTimerRef.current);
+        setAnswered("wrong");
+        setChosen("__timeout__");
+        setTotal(t=>{
+          const nt=t+1;
+          if(nt>=maxQ){ stopTimer(); setTimeout(()=>setGameOver(true),900); }
+          return nt;
+        });
+        setStreak(0);
+      }
+    },1000);
+  };
+
+  useEffect(()=>()=>stopTimer(),[]);
+
+  // Envoi vers Google Sheets uniquement en mode balisée
+  useEffect(()=>{
+    if(gameOver && total>0 && mode==="balisee"){
+      const s100=computeScore100(speedBonuses,maxQ);
+      sendToSheet(prenom,s100,score,total);
+    }
+  },[gameOver]);
+
+  const handleChoice=(id)=>{
+    if(answered||gameOver) return;
+    clearInterval(qTimerRef.current); // stop question timer
+    const timeUsed=8-qTimeRef.current; // secondes utilisées
+    const correct=id===q.tenseId;
+    setChosen(id);
+    setAnswered(correct?"correct":"wrong");
+    const newTotal=total+1;
+    setTotal(newTotal);
+    if(correct){
+      setScore(s=>s+1);
+      setStreak(s=>{ const ns=s+1; setBestStreak(b=>Math.max(b,ns)); return ns; });
+      // bonus vitesse : courbe exponentielle — répondre vite est bien récompensé
+      // 1s → ~1.0 | 4s → ~0.5 | 8s → 0
+      const bonus=Math.max(0, Math.pow((8-timeUsed)/8, 1.5));
+      setSpeedBonuses(prev=>[...prev,bonus]);
+    } else { setStreak(0); }
+    if(newTotal>=maxQ){ stopTimer(); setTimeout(()=>setGameOver(true),900); }
+  };
+
+  const handleNext=()=>{ if(total<maxQ) nextQ(activeTenses); };
+  const toggleTense=(id)=>setActiveTenses(prev=>prev.includes(id)?prev.filter(t=>t!==id):[...prev,id]);
+  const modeGroups=[...new Set(ALL_TENSES.map(t=>t.mode))];
+  const timePct=timeLeft/(maxQ*8)*100;
+  const timeIsLow=timeLeft<=10;
+  const qTimePct=qTimeLeft/8*100;
+  const qTimeIsLow=qTimeLeft<=3;
+
+  // ── HOME SCREEN ──────────────────────────────────────────────────────────
+  if(screen==="home") return (
+    <div style={{minHeight:"100vh",background:C.bg,color:C.text,fontFamily:"'Georgia',serif",display:"flex",alignItems:"center",justifyContent:"center",padding:"1rem"}}>
+      <style>{globalCss}</style>
+      <div style={{maxWidth:400,width:"100%",textAlign:"center"}} className="fadein">
+        <button onClick={()=>setScreen("home")} style={{background:"none",border:"none",color:C.textMid,cursor:"pointer",fontFamily:"Georgia,serif",fontSize:"0.82rem",marginBottom:"1rem",padding:0}}>
+          ← Retour
+        </button>
+        <div style={{fontSize:"3rem",marginBottom:"0.8rem"}}>{mode==="balisee"?"🎯":"🕹️"}</div>
+        <h1 style={{fontSize:"2.2rem",color:C.text,margin:"0 0 0.3rem",letterSpacing:"-0.02em"}}>{mode==="balisee"?"Partie balisée":"Entraînement libre"}</h1>
+        <p style={{color:C.accent,fontStyle:"italic",margin:"0 0 2.5rem",fontSize:"1rem"}}>Reconnaître le temps verbal</p>
+        <div style={{display:"flex",flexDirection:"column",gap:"1rem"}}>
+          <button onClick={()=>{setMode("balisee");setScreen("name");}} className="startbtn" style={{
+            padding:"1.1rem",background:C.accent,color:"#0d1117",border:"none",borderRadius:10,
+            fontSize:"1.05rem",fontFamily:"Georgia,serif",cursor:"pointer",fontWeight:"bold",
+            boxShadow:`0 0 24px rgba(79,156,249,0.3)`,letterSpacing:"0.02em",
+          }}>
+            🎯 Partie balisée
+          </button>
+          <div style={{fontSize:"0.75rem",color:C.textDim,fontStyle:"italic",marginTop:"-0.4rem",marginBottom:"0.4rem"}}>
+            Temps imposés par l'enseignant · Score envoyé
+          </div>
+          <button onClick={()=>{setMode("libre");setActiveTenses(DEFAULT_ACTIVE);setScreen("name");}} className="startbtn" style={{
+            padding:"1.1rem",background:C.surface,color:C.text,border:`1.5px solid ${C.border}`,borderRadius:10,
+            fontSize:"1.05rem",fontFamily:"Georgia,serif",cursor:"pointer",fontWeight:"normal",
+          }}>
+            🕹️ Entraînement libre
+          </button>
+          <div style={{fontSize:"0.75rem",color:C.textDim,fontStyle:"italic",marginTop:"-0.4rem"}}>
+            Tu choisis tes temps · Pas d'envoi de score
+          </div>
+        </div>
+        <div style={{marginTop:"2.5rem",borderTop:`1px solid ${C.border}`,paddingTop:"1.2rem"}}>
+          <button onClick={()=>setScreen("teacher")} style={{
+            background:"none",border:"none",color:C.textDim,cursor:"pointer",
+            fontSize:"0.75rem",fontFamily:"Georgia,serif",
+          }}>
+            ⚙️ Accès enseignant
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // ── TEACHER SCREEN ────────────────────────────────────────────────────────
+  if(screen==="teacher") return (
+    <div style={{minHeight:"100vh",background:C.bg,color:C.text,fontFamily:"'Georgia',serif",display:"flex",alignItems:"center",justifyContent:"center",padding:"1rem"}}>
+      <style>{globalCss}</style>
+      <div style={{maxWidth:420,width:"100%"}} className="fadein">
+        <button onClick={()=>setScreen("home")} style={{background:"none",border:"none",color:C.textMid,cursor:"pointer",fontFamily:"Georgia,serif",fontSize:"0.82rem",marginBottom:"1.5rem",padding:0}}>
+          ← Retour
+        </button>
+        <h2 style={{fontSize:"1.5rem",color:C.text,marginBottom:"0.3rem"}}>Accès enseignant</h2>
+        <p style={{color:C.textMid,fontSize:"0.85rem",fontStyle:"italic",marginBottom:"1.5rem"}}>Configure les temps de la partie balisée</p>
+
+        {!teacherUnlocked ? (
+          <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:10,padding:"1.5rem"}}>
+            <label style={{display:"block",fontSize:"0.78rem",textTransform:"uppercase",letterSpacing:"0.1em",color:C.textMid,marginBottom:"0.8rem"}}>
+              Code enseignant
+            </label>
+            <input
+              autoFocus type="password" value={teacherCode}
+              onChange={e=>{setTeacherCode(e.target.value);setTeacherError(false);}}
+              onKeyDown={e=>{if(e.key==="Enter"){if(teacherCode===TEACHER_CODE){setTeacherUnlocked(true);setTeacherError(false);}else{setTeacherError(true);}}}}
+              placeholder="••••••••"
+              style={{width:"100%",padding:"0.75rem 1rem",background:C.surface2,border:`1.5px solid ${teacherError?C.red:C.border}`,borderRadius:8,color:C.text,fontSize:"1.1rem",fontFamily:"Georgia,serif",outline:"none",boxSizing:"border-box",textAlign:"center"}}
+            />
+            {teacherError&&<div style={{color:C.red,fontSize:"0.8rem",marginTop:"0.5rem",fontStyle:"italic"}}>Code incorrect</div>}
+            <button onClick={()=>{if(teacherCode===TEACHER_CODE){setTeacherUnlocked(true);setTeacherError(false);}else{setTeacherError(true);}}}
+              className="startbtn" style={{display:"block",width:"100%",marginTop:"1rem",padding:"0.8rem",background:C.accent,color:"#0d1117",border:"none",borderRadius:8,fontSize:"1rem",fontFamily:"Georgia,serif",cursor:"pointer",fontWeight:"bold"}}>
+              Déverrouiller
+            </button>
+          </div>
+        ) : (
+          <div>
+            <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:10,padding:"1.2rem 1.5rem",marginBottom:"1rem"}}>
+              <div style={labelStyle}>Temps actifs en partie balisée</div>
+              {[...new Set(ALL_TENSES.map(t=>t.mode))].map(mode=>(
+                <div key={mode} style={{marginBottom:"0.8rem"}}>
+                  <div style={{fontSize:"0.7rem",textTransform:"uppercase",letterSpacing:"0.12em",color:C.accent,marginBottom:"0.4rem"}}>{mode}</div>
+                  <div style={{display:"flex",flexWrap:"wrap",gap:"0.4rem"}}>
+                    {ALL_TENSES.filter(t=>t.mode===mode).map(t=>{
+                      const on=baliseedTenses.includes(t.id);
+                      return (
+                        <button key={t.id} onClick={()=>setBaliseedTenses(prev=>on?prev.filter(x=>x!==t.id):[...prev,t.id])} className="pill" style={{
+                          ...pillBase,background:on?C.accentDim:"transparent",borderColor:on?C.accent:C.border,color:on?C.accent:C.textMid,
+                        }}>
+                          {on&&<span style={{fontSize:"0.65rem",marginRight:3}}>✓</span>}{t.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+              <div style={{fontSize:"0.78rem",color:C.textDim,fontStyle:"italic",marginTop:"0.5rem"}}>
+                {baliseedTenses.length} temps sélectionné{baliseedTenses.length>1?"s":""}
+                {baliseedTenses.length<2&&<span style={{color:C.red,marginLeft:8}}>— min. 2 requis</span>}
+              </div>
+            </div>
+            <button onClick={()=>{setTeacherUnlocked(false);setTeacherCode("");setScreen("home");}} className="startbtn"
+              style={{display:"block",width:"100%",padding:"0.85rem",background:C.green,color:"#0d1117",border:"none",borderRadius:8,fontSize:"1rem",fontFamily:"Georgia,serif",cursor:"pointer",fontWeight:"bold"}}>
+              ✓ Enregistrer et retourner
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  // ── NAME SCREEN ───────────────────────────────────────────────────────────
+  if(screen==="name") return (
+    <div style={{minHeight:"100vh",background:C.bg,color:C.text,fontFamily:"'Georgia',serif",display:"flex",alignItems:"center",justifyContent:"center",padding:"1rem"}}>
+      <style>{globalCss}</style>
+      <div style={{maxWidth:400,width:"100%",textAlign:"center"}} className="fadein">
+        <button onClick={()=>setScreen("home")} style={{background:"none",border:"none",color:C.textMid,cursor:"pointer",fontFamily:"Georgia,serif",fontSize:"0.82rem",marginBottom:"1rem",padding:0}}>
+          ← Retour
+        </button>
+        <div style={{fontSize:"3rem",marginBottom:"0.8rem"}}>{mode==="balisee"?"🎯":"🕹️"}</div>
+        <h1 style={{fontSize:"2.2rem",color:C.text,margin:"0 0 0.3rem",letterSpacing:"-0.02em"}}>{mode==="balisee"?"Partie balisée":"Entraînement libre"}</h1>
+        <p style={{color:C.accent,fontStyle:"italic",margin:"0 0 2.5rem",fontSize:"1rem"}}>Reconnaître le temps verbal</p>
+
+        <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:10,padding:"2rem"}}>
+          <label style={{display:"block",fontSize:"0.78rem",textTransform:"uppercase",letterSpacing:"0.1em",color:C.textMid,marginBottom:"0.8rem"}}>
+            Ton prénom
+          </label>
+          <input
+            autoFocus
+            type="text"
+            value={prenom}
+            onChange={e=>setPrenom(e.target.value)}
+            onKeyDown={e=>e.key==="Enter"&&prenom.trim().length>=2&&(mode==="balisee"?startGame(baliseedTenses):setScreen("setup"))}
+            placeholder="Écris ton prénom…"
+            style={{
+              width:"100%",padding:"0.75rem 1rem",background:C.surface2,
+              border:`1.5px solid ${prenom.trim().length>=2?C.accent:C.border}`,
+              borderRadius:8,color:C.text,fontSize:"1.1rem",fontFamily:"Georgia,serif",
+              outline:"none",boxSizing:"border-box",textAlign:"center",
+              transition:"border-color 0.2s",
+            }}
+          />
+          <button
+            onClick={()=>mode==="balisee"?startGame(baliseedTenses):setScreen("setup")}
+            disabled={prenom.trim().length<2}
+            className="startbtn"
+            style={{
+              display:"block",width:"100%",marginTop:"1.2rem",padding:"0.85rem",
+              background:prenom.trim().length>=2?C.accent:"#21262d",
+              color:prenom.trim().length>=2?"#0d1117":C.textDim,
+              border:"none",borderRadius:8,fontSize:"1rem",fontFamily:"Georgia,serif",
+              cursor:prenom.trim().length>=2?"pointer":"not-allowed",fontWeight:"bold",
+              transition:"all 0.2s",
+              boxShadow:prenom.trim().length>=2?`0 0 20px rgba(79,156,249,0.25)`:"none",
+            }}
+          >
+            Continuer →
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // ── SETUP ─────────────────────────────────────────────────────────────────
+  if(screen==="setup") return (
+    <div style={{minHeight:"100vh",background:C.bg,color:C.text,fontFamily:"'Georgia',serif",padding:"2rem 1rem 4rem",boxSizing:"border-box"}}>
+      <style>{globalCss}</style>
+      <div style={{maxWidth:620,margin:"0 auto"}}>
+        <div style={{textAlign:"center",marginBottom:"2.5rem"}}>
+          <div style={{fontSize:"0.75rem",color:C.textMid,marginBottom:"0.5rem",textTransform:"uppercase",letterSpacing:"0.1em"}}>🕹️ Entraînement libre</div>
+          <h1 style={{fontSize:"2.4rem",color:C.text,margin:"0 0 0.3rem",fontWeight:"bold",letterSpacing:"-0.02em"}}>
+            Bonjour, {prenom} !
+          </h1>
+          <p style={{color:C.accent,fontStyle:"italic",margin:0,fontSize:"1.05rem"}}>
+            Configure ta session
+          </p>
+        </div>
+
+        {/* Nombre de questions */}
+        <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:8,padding:"1.2rem 1.5rem",marginBottom:"1.5rem"}}>
+          <div style={labelStyle}>Nombre de questions</div>
+          <div style={{display:"flex",gap:"0.6rem"}}>
+            {[10,20].map(n=>(
+              <button key={n} onClick={()=>setMaxQ(n)} className="pill" style={{
+                ...pillBase,
+                background:maxQ===n?C.accentDim:"transparent",
+                borderColor:maxQ===n?C.accent:C.border,
+                color:maxQ===n?C.accent:C.textMid,
+                fontSize:"1rem",padding:"0.45rem 1.4rem",fontWeight:maxQ===n?"bold":"normal"
+              }}>{n} questions</button>
+            ))}
+          </div>
+        </div>
+
+        {/* Temps */}
+        <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:8,padding:"1.2rem 1.5rem",marginBottom:"1.5rem"}}>
+          <div style={labelStyle}>Temps à inclure</div>
+          {modeGroups.map(mode=>(
+            <div key={mode} style={{marginBottom:"1rem"}}>
+              <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.12em",color:C.accent,marginBottom:"0.45rem"}}>{mode}</div>
+              <div style={{display:"flex",flexWrap:"wrap",gap:"0.4rem"}}>
+                {ALL_TENSES.filter(t=>t.mode===mode).map(t=>{
+                  const on=activeTenses.includes(t.id);
+                  return (
+                    <button key={t.id} onClick={()=>toggleTense(t.id)} className="pill" style={{
+                      ...pillBase,
+                      background:on?C.accentDim:"transparent",
+                      borderColor:on?C.accent:C.border,
+                      color:on?C.accent:C.textMid,
+                    }}>
+                      {on&&<span style={{fontSize:"0.65rem",marginRight:3}}>✓</span>}{t.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+          <div style={{marginTop:"0.5rem",fontSize:"0.8rem",color:C.textDim,fontStyle:"italic"}}>
+            {activeTenses.length} temps sélectionné{activeTenses.length>1?"s":""}
+            {activeTenses.length<2&&<span style={{color:C.red,marginLeft:8}}>— min. 2 requis</span>}
+          </div>
+        </div>
+
+        <button onClick={startGame} disabled={activeTenses.length<2} className="startbtn" style={{
+          display:"block",width:"100%",padding:"0.9rem",
+          background:activeTenses.length<2?"#21262d":C.accent,
+          color:activeTenses.length<2?C.textDim:"#0d1117",
+          border:"none",borderRadius:8,fontSize:"1rem",fontFamily:"Georgia,serif",
+          cursor:activeTenses.length<2?"not-allowed":"pointer",fontWeight:"bold",
+          letterSpacing:"0.04em",transition:"all 0.15s",
+          boxShadow:activeTenses.length>=2?`0 0 20px rgba(79,156,249,0.25)`:"none",
+        }}>
+          Commencer → {maxQ} questions · {maxQ*8}s
+        </button>
+      </div>
+    </div>
+  );
+
+  if(gameOver) return (
+    <div style={{minHeight:"100vh",background:C.bg,color:C.text,fontFamily:"'Georgia',serif",display:"flex",alignItems:"center",justifyContent:"center",padding:"1rem"}}>
+      <style>{globalCss}</style>
+      <div style={{maxWidth:480,width:"100%",textAlign:"center"}} className="fadein">
+        <div style={{fontSize:"3.5rem",marginBottom:"0.5rem"}}>
+          {score100>=80?"🏆":score100>=55?"👍":"📚"}
+        </div>
+        <h2 style={{fontSize:"2rem",margin:"0 0 0.3rem",color:C.text}}>Bravo, {prenom} !</h2>
+        <p style={{color:C.textMid,fontStyle:"italic",marginBottom:"1.5rem"}}>
+          {score100>=80?"Excellent travail !":score100>=55?"Bien joué !":"Continue à t'entraîner !"}
+        </p>
+
+        {/* Score /100 mis en avant */}
+        <div style={{background:C.surface,border:`2px solid ${score100>=80?C.green:score100>=55?C.gold:C.red}`,borderRadius:12,padding:"1.5rem",marginBottom:"1.2rem",position:"relative",overflow:"hidden"}}>
+          <div style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.12em",color:C.textMid,marginBottom:"0.3rem"}}>Score final</div>
+          <div style={{fontSize:"4rem",fontWeight:"bold",color:score100>=80?C.green:score100>=55?C.gold:C.red,lineHeight:1}}>{score100}</div>
+          <div style={{fontSize:"1rem",color:C.textDim,marginTop:"0.2rem"}}>/100</div>
+          {/* barre de progression */}
+          <div style={{marginTop:"1rem",height:6,background:C.surface2,borderRadius:3,overflow:"hidden"}}>
+            <div style={{height:"100%",width:`${score100}%`,background:score100>=80?C.green:score100>=55?C.gold:C.red,borderRadius:3,transition:"width 1s ease"}}/>
+          </div>
+          <div style={{display:"flex",justifyContent:"space-between",fontSize:"0.68rem",color:C.textDim,marginTop:"0.3rem"}}>
+            <span>Justesse × 60%</span><span>Rapidité × 40%</span>
+          </div>
+        </div>
+
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:"0.6rem",marginBottom:"1.5rem"}}>
+          {[
+            {label:"Réponses",val:`${score}/${total}`,color:C.accent},
+            {label:"Précision",val:`${total>0?Math.round(score/total*100):0}%`,color:score/total>=0.7?C.green:C.gold},
+            {label:"Meilleure série",val:`🔥${bestStreak}`,color:C.gold},
+          ].map(item=>(
+            <div key={item.label} style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:8,padding:"0.8rem"}}>
+              <div style={{fontSize:"1.4rem",fontWeight:"bold",color:item.color}}>{item.val}</div>
+              <div style={{fontSize:"0.68rem",color:C.textMid,textTransform:"uppercase",letterSpacing:"0.08em",marginTop:"0.2rem"}}>{item.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Statut envoi Google Sheets */}
+        <div style={{marginBottom:"0.8rem",fontSize:"0.8rem",fontStyle:"italic",color:sendStatus==="ok"?C.green:sendStatus==="error"?C.red:C.textDim,minHeight:"1.2rem"}}>
+          {sendStatus==="sending"&&"⏳ Envoi du score en cours…"}
+          {sendStatus==="ok"&&"✓ Score enregistré dans Google Sheets !"}
+          {sendStatus==="error"&&"⚠️ Échec de l'envoi — vérifie ta connexion."}
+        </div>
+
+        <div style={{display:"flex",gap:"0.8rem"}}>
+          <button onClick={startGame} className="startbtn" style={{flex:1,padding:"0.8rem",background:C.accent,color:"#0d1117",border:"none",borderRadius:8,fontSize:"0.95rem",fontFamily:"Georgia,serif",cursor:"pointer",fontWeight:"bold"}}>
+            Rejouer
+          </button>
+          <button onClick={()=>{stopTimer();setScreen("home");setPrenom("");}} className="startbtn" style={{flex:1,padding:"0.8rem",background:C.surface2,color:C.text,border:`1px solid ${C.border}`,borderRadius:8,fontSize:"0.95rem",fontFamily:"Georgia,serif",cursor:"pointer"}}>
+            Changer d'élève
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // ── GAME ─────────────────────────────────────────────────────────────────
+  if(!q) return null;
+  const correctTense=getTense(q.tenseId);
+  const pct=total>0?Math.round(score/total*100):0;
+  const displayPron=q.pronoun==="_"?null:q.pronoun;
+
+  return (
+    <div style={{minHeight:"100vh",background:C.bg,color:C.text,fontFamily:"'Georgia',serif",padding:"1.5rem 1rem 3rem",boxSizing:"border-box"}}>
+      <style>{globalCss}</style>
+      <div style={{maxWidth:580,margin:"0 auto"}}>
+
+        {/* Header */}
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"0.8rem"}}>
+          <button onClick={()=>{stopTimer();setScreen("home");setPrenom("");}} className="backbtn" style={{background:"none",border:"none",color:C.textMid,cursor:"pointer",fontFamily:"Georgia,serif",fontSize:"0.82rem",padding:0}}>
+            ← Quitter
+          </button>
+          <div style={{display:"flex",alignItems:"center",gap:"0.8rem"}}>
+            {streak>=3&&<span style={{fontSize:"0.85rem",color:C.gold}}>🔥{streak}</span>}
+            <span style={{background:C.surface2,border:`1px solid ${C.border}`,borderRadius:6,padding:"0.2rem 0.7rem",fontSize:"0.9rem",color:C.accent,fontWeight:"bold"}}>
+              {score100}<span style={{fontSize:"0.65rem",color:C.textMid,fontWeight:"normal"}}>/100</span>
+            </span>
+            <span style={{background:C.surface2,border:`1px solid ${C.border}`,borderRadius:6,padding:"0.2rem 0.7rem",fontSize:"0.82rem",color:C.textMid}}>
+              {score}/{total}
+            </span>
+          </div>
+        </div>
+
+        {/* Global timer bar */}
+        <div style={{height:3,background:C.surface2,borderRadius:3,marginBottom:"0.4rem",overflow:"hidden"}}>
+          <div style={{height:"100%",width:`${timePct}%`,background:timeIsLow?C.red:C.textDim,borderRadius:3,transition:"width 1s linear"}}/>
+        </div>
+        <div style={{textAlign:"right",fontSize:"0.72rem",color:C.textDim,marginBottom:"0.9rem"}}>
+          {total}/{maxQ} questions · ⏱ {timeLeft}s
+        </div>
+
+        {/* Per-question timer bar */}
+        <div style={{height:6,background:C.surface2,borderRadius:3,marginBottom:"1.2rem",overflow:"hidden"}}>
+          <div style={{
+            height:"100%",width:`${qTimePct}%`,borderRadius:3,
+            background:qTimeIsLow?C.red:qTimeLeft<=5?C.gold:C.green,
+            transition:"width 1s linear, background 0.3s",
+          }}/>
+        </div>
+
+        {/* Question */}
+        <div className="qcard" style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:10,padding:"1.8rem",marginBottom:"1.2rem",textAlign:"center"}}>
+          <div style={{fontSize:"0.7rem",textTransform:"uppercase",letterSpacing:"0.14em",color:C.textDim,marginBottom:"0.8rem"}}>
+            {q.verb}
+          </div>
+          <div style={{display:"flex",justifyContent:"center",alignItems:"baseline",gap:"0.7rem",marginBottom:"0.7rem"}}>
+            {displayPron&&<span style={{fontSize:"1.4rem",fontStyle:"italic",color:C.textMid}}>{displayPron}</span>}
+            <span style={{fontSize:"2.2rem",fontWeight:"bold",color:C.text,letterSpacing:"-0.02em"}}>{q.form}</span>
+          </div>
+          <div style={{fontSize:"0.78rem",fontStyle:"italic",color:C.textDim}}>Identifie le temps verbal</div>
+        </div>
+
+        {/* Choices */}
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"0.55rem",marginBottom:"1rem"}}>
+          {choices.map(id=>{
+            const t=getTense(id);
+            const isCorrect=id===q.tenseId;
+            const isChosen=id===chosen;
+            let bg=C.surface2, border=C.border, col=C.text;
+            if(answered){
+              if(isCorrect){bg=C.greenDim;border=C.green;col=C.green;}
+              else if(isChosen){bg=C.redDim;border=C.red;col=C.red;}
+              else{bg="transparent";border=C.textDim;col=C.textDim;}
+            }
+            return (
+              <button key={id} onClick={()=>handleChoice(id)}
+                className={answered?"":"choicebtn"}
+                style={{padding:"0.75rem 0.5rem",background:bg,border:`1.5px solid ${border}`,borderRadius:8,cursor:answered?"default":"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:"0.1rem",transition:"all 0.15s",fontFamily:"Georgia,serif"}}>
+                <span style={{fontSize:"0.62rem",textTransform:"uppercase",letterSpacing:"0.1em",color:answered?(isCorrect?C.green:isChosen?C.red:C.textDim):C.textMid}}>{t.mode}</span>
+                <span style={{fontSize:"0.92rem",fontWeight:"bold",color:col}}>{t.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {answered&&(
+          <div className="fadein" style={{
+            padding:"0.7rem 1rem",borderRadius:8,marginBottom:"0.8rem",fontSize:"0.87rem",fontStyle:"italic",
+            background:answered==="correct"?C.greenDim:C.redDim,
+            borderLeft:`3px solid ${answered==="correct"?C.green:C.red}`,
+            color:answered==="correct"?C.green:C.red,
+          }}>
+            {answered==="correct"
+              ?`✓ Exact ! ${correctTense.mode} · ${correctTense.label}`
+              :chosen==="__timeout__"
+                ?`⏰ Temps écoulé ! C'était : ${correctTense.mode} · ${correctTense.label}`
+                :`✗ C'était : ${correctTense.mode} · ${correctTense.label}`}
+          </div>
+        )}
+
+        {answered&&total<maxQ&&(
+          <button onClick={handleNext} className="startbtn" style={{display:"block",width:"100%",padding:"0.75rem",background:C.accent,color:"#0d1117",border:"none",borderRadius:8,fontSize:"0.95rem",fontFamily:"Georgia,serif",cursor:"pointer",fontWeight:"bold",letterSpacing:"0.03em"}}>
+            Question suivante →
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── SHARED STYLES ────────────────────────────────────────────────────────────
+const labelStyle={fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.1em",color:"#8b949e",marginBottom:"0.7rem"};
+const pillBase={borderRadius:6,border:"1.5px solid",fontSize:"0.82rem",cursor:"pointer",fontFamily:"Georgia,serif",transition:"all 0.15s"};
+
+const globalCss=`
+  @keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadein{from{opacity:0}to{opacity:1}}
+  .qcard{animation:slideUp 0.3s ease}
+  .fadein{animation:fadein 0.25s ease}
+  .pill:hover{transform:scale(1.04);filter:brightness(1.1)}
+  .startbtn:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}
+  .choicebtn:hover{border-color:#4f9cf9 !important;transform:translateY(-2px);box-shadow:0 4px 14px rgba(79,156,249,0.2)}
+  .backbtn:hover{color:#e6edf3}
+  *{box-sizing:border-box}
+`;
+
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
       plus_que_parfait_sub:{je:"eusse chanté",tu:"eusses chanté",il:"eût chanté",elle:"eût chanté",nous:"eussions chanté",vous:"eussiez chanté",ils:"eussent chanté",elles:"eussent chanté"},
       present_cond:{je:"chanterais",tu:"chanterais",il:"chanterait",elle:"chanterait",nous:"chanterions",vous:"chanteriez",ils:"chanteraient",elles:"chanteraient"},
       passe1_cond:{je:"aurais chanté",tu:"aurais chanté",il:"aurait chanté",elle:"aurait chanté",nous:"aurions chanté",vous:"auriez chanté",ils:"auraient chanté",elles:"auraient chanté"},
