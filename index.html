@@ -415,8 +415,8 @@ const LEVELS=[
 ];
 
 // ─── RECORDS (localStorage) ───────────────────────────────────────────────────
-function todayKey(){ return "record_day_"+new Date().toISOString().slice(0,10); }
-function monthKey(){ return "record_month_"+new Date().toISOString().slice(0,7); }
+function todayKey(lvl){ return "record_day_"+new Date().toISOString().slice(0,10)+"_l"+(lvl||1); }
+function monthKey(lvl){ return "record_month_"+new Date().toISOString().slice(0,7)+"_l"+(lvl||1); }
 function getRecord(key){ try{ return JSON.parse(localStorage.getItem(key)||"null"); }catch(e){ return null; } }
 function setRecord(key,val){ try{ localStorage.setItem(key,JSON.stringify(val)); }catch(e){} }
 function resetRecords(){ 
@@ -424,8 +424,8 @@ function resetRecords(){
     Object.keys(localStorage).filter(k=>k.startsWith("record_")).forEach(k=>localStorage.removeItem(k));
   }catch(e){} 
 }
-function checkAndSaveRecord(prenom, score100){
-  const dk=todayKey(), mk=monthKey();
+function checkAndSaveRecord(prenom, score100, lvlId){
+  const dk=todayKey(lvlId), mk=monthKey(lvlId);
   const day=getRecord(dk), month=getRecord(mk);
   const newDay=!day||score100>day.score;
   const newMonth=!month||score100>month.score;
@@ -454,7 +454,7 @@ const C = {
 };
 
 // ─── RECORD WIDGET ───────────────────────────────────────────────────────────
-function RecordWidget({day, month, newRecords}){
+function RecordWidget({day, month, level, newRecords}){
   if(!day && !month) return null;
   const cols=[
     day   && {label:"Aujourd'hui", data:day,   color:"#3fb950", isNew:newRecords&&newRecords.newDay},
@@ -462,7 +462,7 @@ function RecordWidget({day, month, newRecords}){
   ].filter(Boolean);
   return (
     <div style={{marginTop:"1.5rem",background:"#161b22",border:"1px solid #30363d",borderRadius:10,padding:"0.9rem 1.2rem",textAlign:"left"}}>
-      <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.12em",color:"#8b949e",marginBottom:"0.6rem"}}>🏆 Records (partie balisée)</div>
+      <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.12em",color:"#8b949e",marginBottom:"0.6rem"}}>🏆 Records sur cet appareil{level?" · "+level.emoji+" "+level.label:""}</div>
       <div style={{display:"grid",gridTemplateColumns:`repeat(${cols.length},1fr)`,gap:"0.5rem"}}>
         {cols.map(({label,data,color,isNew})=>(
           <div key={label} style={{background:"#1c2330",borderRadius:8,padding:"0.6rem 0.5rem",border:isNew?`1px solid ${color}`:"1px solid #30363d",textAlign:"center"}}>
@@ -503,8 +503,8 @@ function App(){
   const [gameOver,setGameOver]=useState(false);
   const [speedBonuses,setSpeedBonuses]=useState([]); // bonus vitesse par bonne réponse [0..1]
   const [sendStatus,setSendStatus]=useState(null); // null | "sending" | "ok" | "error"
-  const [recordDay,setRecordDay]=useState(()=>getRecord(todayKey()));
-  const [recordMonth,setRecordMonth]=useState(()=>getRecord(monthKey()));
+  const [recordDay,setRecordDay]=useState(null);
+  const [recordMonth,setRecordMonth]=useState(null);
   const [newRecords,setNewRecords]=useState(null); // {newDay, newMonth}
   const timerRef=useRef(null);
   const levelRef=useRef(8); // secondes par question live
@@ -638,10 +638,11 @@ function App(){
       const s100=computeScore100(speedBonuses,maxQ);
       sendToSheet(prenom,s100,score,total);
       // Sauvegarde records
-      const result=checkAndSaveRecord(prenom,s100);
+      const lvlId=level?level.id:1;
+      const result=checkAndSaveRecord(prenom,s100,lvlId);
       setNewRecords(result);
-      setRecordDay(getRecord(todayKey()));
-      setRecordMonth(getRecord(monthKey()));
+      setRecordDay(getRecord(todayKey(lvlId)));
+      setRecordMonth(getRecord(monthKey(lvlId)));
     }
   },[gameOver]);
 
@@ -708,7 +709,7 @@ function App(){
             Tu choisis tes temps · Pas d'envoi de score
           </div>
         </div>
-          <RecordWidget day={recordDay} month={recordMonth} newRecords={null}/>
+          <RecordWidget day={recordDay} month={recordMonth} level={level} newRecords={null}/>
         <div style={{marginTop:"2.5rem",borderTop:`1px solid ${C.border}`,paddingTop:"1.2rem"}}>
           <button onClick={()=>setScreen("teacher")} style={{
             background:"none",border:"none",color:C.textDim,cursor:"pointer",
@@ -867,7 +868,7 @@ function App(){
         </p>
         <div style={{display:"flex",flexDirection:"column",gap:"0.8rem"}}>
           {LEVELS.map(lv=>(
-            <button key={lv.id} onClick={()=>{setLevel(lv);levelRef.current=lv.seconds;startGame(baliseedTenses,lv);}} className="startbtn" style={{
+            <button key={lv.id} onClick={()=>{setLevel(lv);levelRef.current=lv.seconds;setRecordDay(getRecord(todayKey(lv.id)));setRecordMonth(getRecord(monthKey(lv.id)));startGame(baliseedTenses,lv);}} className="startbtn" style={{
               padding:"1.1rem 1.5rem",
               background:C.surface,
               border:`2px solid ${C.border}`,
@@ -1055,7 +1056,7 @@ function App(){
           ))}
         </div>
 
-        <RecordWidget day={recordDay} month={recordMonth} newRecords={newRecords}/>
+        <RecordWidget day={recordDay} month={recordMonth} level={level} newRecords={newRecords}/>
 
         {/* Statut envoi Google Sheets */}
         <div style={{marginBottom:"0.8rem",fontSize:"0.8rem",fontStyle:"italic",color:sendStatus==="ok"?C.green:sendStatus==="error"?C.red:C.textDim,minHeight:"1.2rem"}}>
