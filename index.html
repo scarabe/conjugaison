@@ -21,7 +21,9 @@
 <body>
   <div id="root"></div>
   <script type="text/babel">
-    // ─── TENSES (sans conditionnel passé 2ème forme) ──────────────────────────────
+    const { useState, useEffect, useCallback, useRef } = React;
+
+// ─── TENSES (sans conditionnel passé 2ème forme) ──────────────────────────────
 const ALL_TENSES = [
   { id: "present_ind",          label: "Présent",           mode: "Indicatif" },
   { id: "imparfait_ind",        label: "Imparfait",         mode: "Indicatif" },
@@ -1216,6 +1218,7 @@ const globalCss=`
   }
   *{box-sizing:border-box}
 `;
+
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<App />);
