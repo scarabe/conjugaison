@@ -545,7 +545,7 @@ function App(){
   const [sendStatus,setSendStatus]=useState(null); // null | "sending" | "ok" | "error"
   const [recordDay,setRecordDay]=useState(null);
   const [recordWeek,setRecordWeek]=useState(null);
-  const [newRecords,setNewRecords]=useState(null); // {newDay, newMonth}
+  const [newRecords,setNewRecords]=useState(null); // {newDay, newWeek}
   const timerRef=useRef(null);
   const levelRef=useRef(8); // secondes par question live
   const rafRef=useRef(null);
