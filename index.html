@@ -1062,13 +1062,13 @@ function App(){
       <style>{globalCss}</style>
       <div style={{maxWidth:480,width:"100%",textAlign:"center"}} className="fadein">
         <div style={{fontSize:"3.5rem",marginBottom:"0.5rem"}}>
-          {score100>=80?"🏆":score100>=55?"👍":"📚"}
+          {score100>=91?"🌟":score100>=81?"🏆":score100>=71?"👍":score100>=51?"🙂":score100>=41?"😐":"📚"}
         </div>
-        <h2 style={{fontSize:"2rem",margin:"0 0 0.3rem",color:C.text}}>Bravo, {prenom} !</h2>
-        {level&&mode==="balisee"&&<div style={{fontSize:"0.85rem",color:C.textMid,marginBottom:"0.3rem"}}>{level.emoji} {level.label}</div>}
-        <p style={{color:C.textMid,fontStyle:"italic",marginBottom:"1.5rem"}}>
-          {score100>=80?"Excellent travail !":score100>=55?"Bien joué !":"Continue à t'entraîner !"}
-        </p>
+        <h2 style={{fontSize:"2rem",margin:"0 0 0.3rem",color:C.text}}>
+          {score100>=91?"Excellent ! quelle classe !!!":score100>=81?`Bravo, ${prenom}, tes compétences sont solides !`:score100>=71?`Pas mal dis-donc, ${prenom} !`:score100>=51?`Correct, ${prenom} !`:score100>=41?`Allez ${prenom}, encore un petit effort !`:score100>=21?`Va t'entraîner pour améliorer tes compétences, ${prenom}…`:`Oulà ${prenom}, tu dois t'entraîner !`}
+        </h2>
+        {level&&mode==="balisee"&&<div style={{fontSize:"0.85rem",color:C.textMid,marginBottom:"0.3rem",marginTop:"0.3rem"}}>{level.emoji} {level.label}</div>}
+        <div style={{marginBottom:"1.5rem"}}/>
 
         {/* Score /100 mis en avant */}
         <div style={{background:C.surface,border:`2px solid ${score100>=80?C.green:score100>=55?C.gold:C.red}`,borderRadius:12,padding:"1.5rem",marginBottom:"1.2rem",position:"relative",overflow:"hidden"}}>
