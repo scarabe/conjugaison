@@ -416,7 +416,11 @@ const LEVELS=[
 
 // ─── RECORDS (localStorage) ───────────────────────────────────────────────────
 function todayKey(lvl){ return "record_day_"+new Date().toISOString().slice(0,10)+"_l"+(lvl||1); }
-function monthKey(lvl){ return "record_month_"+new Date().toISOString().slice(0,7)+"_l"+(lvl||1); }
+function weekKey(lvl){
+  const d=new Date(); const day=d.getDay()||7;
+  d.setDate(d.getDate()-day+1);
+  return "record_week_"+d.toISOString().slice(0,10)+"_l"+(lvl||1);
+}
 function getRecord(key){ try{ return JSON.parse(localStorage.getItem(key)||"null"); }catch(e){ return null; } }
 function setRecord(key,val){ try{ localStorage.setItem(key,JSON.stringify(val)); }catch(e){} }
 function resetRecords(){ 
@@ -425,13 +429,13 @@ function resetRecords(){
   }catch(e){} 
 }
 function checkAndSaveRecord(prenom, score100, lvlId){
-  const dk=todayKey(lvlId), mk=monthKey(lvlId);
-  const day=getRecord(dk), month=getRecord(mk);
+  const dk=todayKey(lvlId), wk=weekKey(lvlId);
+  const day=getRecord(dk), week=getRecord(wk);
   const newDay=!day||score100>day.score;
-  const newMonth=!month||score100>month.score;
+  const newWeek=!week||score100>week.score;
   if(newDay) setRecord(dk,{prenom,score:score100});
-  if(newMonth) setRecord(mk,{prenom,score:score100});
-  return {newDay, newMonth};
+  if(newWeek) setRecord(wk,{prenom,score:score100});
+  return {newDay, newWeek};
 }
 
 // ─── COLORS ───────────────────────────────────────────────────────────────────
@@ -454,23 +458,59 @@ const C = {
 };
 
 // ─── RECORD WIDGET ───────────────────────────────────────────────────────────
-function RecordWidget({day, month, level, newRecords}){
-  if(!day && !month) return null;
-  const cols=[
-    day   && {label:"Aujourd'hui", data:day,   color:"#3fb950", isNew:newRecords&&newRecords.newDay},
-    month && {label:"Ce mois",     data:month, color:"#d29922", isNew:newRecords&&newRecords.newMonth},
-  ].filter(Boolean);
+function RecordWidget({level, newRecords}){
+  const rows=[
+    {label:"Aujourd'hui", keyFn:todayKey, isNewKey:"newDay"},
+    {label:"Cette semaine", keyFn:weekKey,  isNewKey:"newWeek"},
+  ];
+  const allData=rows.map(r=>({
+    label:r.label,
+    isNewKey:r.isNewKey,
+    levels:LEVELS.map(lv=>getRecord(r.keyFn(lv.id)))
+  }));
+  const hasAny=allData.some(r=>r.levels.some(Boolean));
+  if(!hasAny) return null;
   return (
-    <div style={{marginTop:"1.5rem",background:"#161b22",border:"1px solid #30363d",borderRadius:10,padding:"0.9rem 1.2rem",textAlign:"left"}}>
-      <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.12em",color:"#8b949e",marginBottom:"0.6rem"}}>🏆 Records sur cet appareil{level?" · "+level.emoji+" "+level.label:""}</div>
-      <div style={{display:"grid",gridTemplateColumns:`repeat(${cols.length},1fr)`,gap:"0.5rem"}}>
-        {cols.map(({label,data,color,isNew})=>(
-          <div key={label} style={{background:"#1c2330",borderRadius:8,padding:"0.6rem 0.5rem",border:isNew?`1px solid ${color}`:"1px solid #30363d",textAlign:"center"}}>
-            <div style={{fontSize:"0.6rem",color:"#8b949e",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:"0.2rem"}}>{label}</div>
-            <div style={{fontSize:"1.3rem",fontWeight:"bold",color:isNew?color:"#4f9cf9"}}>{data.score}</div>
-            <div style={{fontSize:"0.72rem",color:"#8b949e"}}>{data.prenom}</div>
-            {isNew&&<div style={{fontSize:"0.6rem",color,marginTop:"0.2rem"}}>✨ Record !</div>}
+    <div style={{marginTop:"1.5rem",background:"#161b22",border:"1px solid #30363d",borderRadius:10,padding:"0.9rem 1rem"}}>
+      <div style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.12em",color:"#8b949e",marginBottom:"0.7rem"}}>
+        🏆 Records sur cet appareil
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"5rem 1fr 1fr 1fr",gap:"0.3rem"}}>
+        {/* Header */}
+        <div/>
+        {LEVELS.map(lv=>(
+          <div key={lv.id} style={{textAlign:"center",fontSize:"0.68rem",color:"#8b949e",paddingBottom:"0.3rem"}}>
+            {lv.emoji} {lv.label}
           </div>
+        ))}
+        {/* Rows */}
+        {allData.map(row=>(
+          [
+            <div key={row.label+"_lbl"} style={{fontSize:"0.62rem",color:"#8b949e",textTransform:"uppercase",letterSpacing:"0.04em",display:"flex",alignItems:"center"}}>
+              {row.label}
+            </div>,
+            ...LEVELS.map((lv,i)=>{
+              const rec=row.levels[i];
+              const isNew=newRecords&&newRecords[row.isNewKey]&&level&&level.id===lv.id;
+              return (
+                <div key={row.label+lv.id} style={{
+                  background:"#1c2330",borderRadius:6,padding:"0.35rem 0.2rem",
+                  border:isNew?"1px solid #3fb950":"1px solid #30363d",
+                  textAlign:"center",
+                }}>
+                  {rec ? (
+                    <>
+                      <div style={{fontSize:"1rem",fontWeight:"bold",color:isNew?"#3fb950":"#4f9cf9",lineHeight:1}}>{rec.score}</div>
+                      <div style={{fontSize:"0.62rem",color:"#8b949e",marginTop:"0.1rem",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{rec.prenom}</div>
+                      {isNew&&<div style={{fontSize:"0.55rem",color:"#3fb950"}}>✨</div>}
+                    </>
+                  ) : (
+                    <div style={{fontSize:"0.7rem",color:"#484f58"}}>—</div>
+                  )}
+                </div>
+              );
+            })
+          ]
         ))}
       </div>
     </div>
@@ -504,7 +544,7 @@ function App(){
   const [speedBonuses,setSpeedBonuses]=useState([]); // bonus vitesse par bonne réponse [0..1]
   const [sendStatus,setSendStatus]=useState(null); // null | "sending" | "ok" | "error"
   const [recordDay,setRecordDay]=useState(null);
-  const [recordMonth,setRecordMonth]=useState(null);
+  const [recordWeek,setRecordWeek]=useState(null);
   const [newRecords,setNewRecords]=useState(null); // {newDay, newMonth}
   const timerRef=useRef(null);
   const levelRef=useRef(8); // secondes par question live
@@ -642,7 +682,7 @@ function App(){
       const result=checkAndSaveRecord(prenom,s100,lvlId);
       setNewRecords(result);
       setRecordDay(getRecord(todayKey(lvlId)));
-      setRecordMonth(getRecord(monthKey(lvlId)));
+      setRecordWeek(getRecord(weekKey(lvlId)));
     }
   },[gameOver]);
 
@@ -709,7 +749,7 @@ function App(){
             Tu choisis tes temps · Pas d'envoi de score
           </div>
         </div>
-          <RecordWidget day={recordDay} month={recordMonth} level={level} newRecords={null}/>
+          <RecordWidget level={level} newRecords={null}/>
         <div style={{marginTop:"2.5rem",borderTop:`1px solid ${C.border}`,paddingTop:"1.2rem"}}>
           <button onClick={()=>setScreen("teacher")} style={{
             background:"none",border:"none",color:C.textDim,cursor:"pointer",
@@ -868,7 +908,7 @@ function App(){
         </p>
         <div style={{display:"flex",flexDirection:"column",gap:"0.8rem"}}>
           {LEVELS.map(lv=>(
-            <button key={lv.id} onClick={()=>{setLevel(lv);levelRef.current=lv.seconds;setRecordDay(getRecord(todayKey(lv.id)));setRecordMonth(getRecord(monthKey(lv.id)));startGame(baliseedTenses,lv);}} className="startbtn" style={{
+            <button key={lv.id} onClick={()=>{setLevel(lv);levelRef.current=lv.seconds;setRecordDay(getRecord(todayKey(lv.id)));setRecordWeek(getRecord(weekKey(lv.id)));startGame(baliseedTenses,lv);}} className="startbtn" style={{
               padding:"1.1rem 1.5rem",
               background:C.surface,
               border:`2px solid ${C.border}`,
@@ -1056,7 +1096,7 @@ function App(){
           ))}
         </div>
 
-        <RecordWidget day={recordDay} month={recordMonth} level={level} newRecords={newRecords}/>
+        <RecordWidget level={level} newRecords={newRecords}/>
 
         {/* Statut envoi Google Sheets */}
         <div style={{marginBottom:"0.8rem",fontSize:"0.8rem",fontStyle:"italic",color:sendStatus==="ok"?C.green:sendStatus==="error"?C.red:C.textDim,minHeight:"1.2rem"}}>
