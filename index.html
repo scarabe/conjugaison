@@ -492,20 +492,39 @@ function App(){
   const stopTimer=()=>{
     if(timerRef.current) clearInterval(timerRef.current);
     if(qTimerRef.current) clearInterval(qTimerRef.current);
+    if(rafRef.current) cancelAnimationFrame(rafRef.current);
   };
 
   const startQTimer=(qSeconds)=>{
     const secs=qSeconds||levelRef.current;
+    // Annule tout
     if(qTimerRef.current) clearInterval(qTimerRef.current);
+    if(rafRef.current) cancelAnimationFrame(rafRef.current);
+    // Init
+    const duration=secs*1000;
+    qDuration.current=duration;
     qTimeRef.current=secs;
     setQTimeLeft(secs);
-    // On décrémente immédiatement après 0ms puis toutes les 1000ms
-    // pour éviter la seconde "gratuite" au démarrage
-    const tick=()=>{
+    setQProgress(1);
+    // RAF pour animation fluide de la barre
+    qStartTime.current=performance.now();
+    const animate=(now)=>{
+      const elapsed=now-qStartTime.current;
+      const remaining=Math.max(0,1-elapsed/duration);
+      setQProgress(remaining);
+      if(remaining>0){
+        rafRef.current=requestAnimationFrame(animate);
+      }
+    };
+    rafRef.current=requestAnimationFrame(animate);
+    // setInterval pour la logique de timeout
+    qTimerRef.current=setInterval(()=>{
       qTimeRef.current=qTimeRef.current-1;
       setQTimeLeft(qTimeRef.current);
       if(qTimeRef.current<=0){
         clearInterval(qTimerRef.current);
+        cancelAnimationFrame(rafRef.current);
+        setQProgress(0);
         setAnswered("wrong");
         setChosen("__timeout__");
         setTotal(t=>{
@@ -516,11 +535,14 @@ function App(){
         });
         setStreak(0);
       }
-    };
-    setTimeout(()=>{ tick(); qTimerRef.current=setInterval(tick,1000); },1000);
+    },1000);
   };
 
   const [qKey,setQKey]=useState(0); // force remount de la barre pour reset instantané
+  const [qProgress,setQProgress]=useState(1); // 1=plein, 0=vide — animation continue
+  const qStartTime=useRef(null);
+  const qDuration=useRef(8000);
+  const rafRef=useRef(null);
   const nextQ=useCallback((tenses,t=activeTenses)=>{
     const question=pickQuestion(tenses||t);
     setQ(question);
@@ -1002,12 +1024,11 @@ function App(){
             className={level&&level.id===3?"flamme-bar":""}
             style={{
               height:"100%",
-              width:`${qTimePct}%`,
+              width:`${qProgress*100}%`,
               borderRadius:4,
               background:level&&level.id===3
                 ? undefined
-                : qTimeIsLow?C.red:level&&level.id===2?C.gold:C.accent,
-              transition:"width 0.85s linear",
+                : qProgress<0.25?C.red:level&&level.id===2?C.gold:C.accent,
             }}
           />
         </div>
