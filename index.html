@@ -499,7 +499,9 @@ function App(){
     if(qTimerRef.current) clearInterval(qTimerRef.current);
     qTimeRef.current=secs;
     setQTimeLeft(secs);
-    qTimerRef.current=setInterval(()=>{
+    // On décrémente immédiatement après 0ms puis toutes les 1000ms
+    // pour éviter la seconde "gratuite" au démarrage
+    const tick=()=>{
       qTimeRef.current=qTimeRef.current-1;
       setQTimeLeft(qTimeRef.current);
       if(qTimeRef.current<=0){
@@ -514,15 +516,18 @@ function App(){
         });
         setStreak(0);
       }
-    },1000);
+    };
+    setTimeout(()=>{ tick(); qTimerRef.current=setInterval(tick,1000); },1000);
   };
 
+  const [qKey,setQKey]=useState(0); // force remount de la barre pour reset instantané
   const nextQ=useCallback((tenses,t=activeTenses)=>{
     const question=pickQuestion(tenses||t);
     setQ(question);
     setChoices(buildChoices(question.tenseId,tenses||t));
     setAnswered(null);
     setChosen(null);
+    setQKey(k=>k+1);
     startQTimer(levelRef.current);
   },[activeTenses]);
 
@@ -991,12 +996,20 @@ function App(){
         </div>
 
         {/* Per-question timer bar */}
-        <div style={{height:6,background:C.surface2,borderRadius:3,marginBottom:"1.2rem",overflow:"hidden"}}>
-          <div style={{
-            height:"100%",width:`${qTimePct}%`,borderRadius:3,
-            background:qTimeIsLow?C.red:qTimeLeft<=5?C.gold:C.green,
-            transition:"width 1s linear, background 0.3s",
-          }}/>
+        <div style={{height:8,background:C.surface2,borderRadius:4,marginBottom:"1.2rem",overflow:"hidden"}}>
+          <div
+            key={qKey}
+            className={level&&level.id===3?"flamme-bar":""}
+            style={{
+              height:"100%",
+              width:`${qTimePct}%`,
+              borderRadius:4,
+              background:level&&level.id===3
+                ? undefined
+                : qTimeIsLow?C.red:level&&level.id===2?C.gold:C.accent,
+              transition:"width 1s linear",
+            }}
+          />
         </div>
 
         {/* Question */}
@@ -1066,12 +1079,28 @@ const pillBase={borderRadius:6,border:"1.5px solid",fontSize:"0.82rem",cursor:"p
 const globalCss=`
   @keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
   @keyframes fadein{from{opacity:0}to{opacity:1}}
+  @keyframes flamme{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  @keyframes flicker{
+    0%,100%{opacity:1;filter:brightness(1)}
+    25%{opacity:0.85;filter:brightness(1.3)}
+    50%{opacity:1;filter:brightness(0.9)}
+    75%{opacity:0.9;filter:brightness(1.2)}
+  }
   .qcard{animation:slideUp 0.3s ease}
   .fadein{animation:fadein 0.25s ease}
   .pill:hover{transform:scale(1.04);filter:brightness(1.1)}
   .startbtn:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}
   .choicebtn:hover{border-color:#4f9cf9 !important;transform:translateY(-2px);box-shadow:0 4px 14px rgba(79,156,249,0.2)}
   .backbtn:hover{color:#e6edf3}
+  .flamme-bar{
+    background:linear-gradient(90deg,#ff4500,#ff8c00,#ffd700,#ff4500);
+    background-size:300% 100%;
+    animation:flamme 1s ease infinite, flicker 0.4s ease infinite;
+  }
   *{box-sizing:border-box}
 `;
 
