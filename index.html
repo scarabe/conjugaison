@@ -461,6 +461,11 @@ function App(){
   const [sendStatus,setSendStatus]=useState(null); // null | "sending" | "ok" | "error"
   const timerRef=useRef(null);
   const levelRef=useRef(8); // secondes par question live
+  const rafRef=useRef(null);
+  const qStartTime=useRef(null);
+  const qDuration=useRef(8000);
+  const [qKey,setQKey]=useState(0);
+  const [qProgress,setQProgress]=useState(1);
 
   const SHEET_URL="https://script.google.com/macros/s/AKfycbwrQrnlr2SQ8wkDawtYLkXRWcsB3tJy-gQJ6Hj_wD2b2t36GMTATsxZILWR3k8wliVz/exec";
 
@@ -538,11 +543,7 @@ function App(){
     },1000);
   };
 
-  const [qKey,setQKey]=useState(0); // force remount de la barre pour reset instantané
-  const [qProgress,setQProgress]=useState(1); // 1=plein, 0=vide — animation continue
-  const qStartTime=useRef(null);
-  const qDuration=useRef(8000);
-  const rafRef=useRef(null);
+
   const nextQ=useCallback((tenses,t=activeTenses)=>{
     const question=pickQuestion(tenses||t);
     setQ(question);
