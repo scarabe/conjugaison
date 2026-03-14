@@ -967,7 +967,7 @@ function App(){
   const displayPron=q.pronoun==="_"?null:q.pronoun;
 
   return (
-    <div style={{minHeight:"100vh",background:C.bg,color:C.text,fontFamily:"'Georgia',serif",padding:"1.5rem 1rem 3rem",boxSizing:"border-box"}}>
+    <div style={{minHeight:"100vh",background:C.bg,color:C.text,fontFamily:"'Georgia',serif",padding:"3.5rem 1rem 3rem",boxSizing:"border-box"}}>
       <style>{globalCss}</style>
       <div style={{maxWidth:580,margin:"0 auto"}}>
 
@@ -1007,7 +1007,7 @@ function App(){
               background:level&&level.id===3
                 ? undefined
                 : qTimeIsLow?C.red:level&&level.id===2?C.gold:C.accent,
-              transition:"width 1s linear",
+              transition:"width 0.85s linear",
             }}
           />
         </div>
