@@ -460,6 +460,7 @@ function App(){
   const [speedBonuses,setSpeedBonuses]=useState([]); // bonus vitesse par bonne réponse [0..1]
   const [sendStatus,setSendStatus]=useState(null); // null | "sending" | "ok" | "error"
   const timerRef=useRef(null);
+  const levelRef=useRef(8); // secondes par question live
 
   const SHEET_URL="https://script.google.com/macros/s/AKfycbwrQrnlr2SQ8wkDawtYLkXRWcsB3tJy-gQJ6Hj_wD2b2t36GMTATsxZILWR3k8wliVz/exec";
 
@@ -494,7 +495,7 @@ function App(){
   };
 
   const startQTimer=(qSeconds)=>{
-    const secs=qSeconds||(level?level.seconds:8);
+    const secs=qSeconds||levelRef.current;
     if(qTimerRef.current) clearInterval(qTimerRef.current);
     qTimeRef.current=secs;
     setQTimeLeft(secs);
@@ -522,13 +523,14 @@ function App(){
     setChoices(buildChoices(question.tenseId,tenses||t));
     setAnswered(null);
     setChosen(null);
-    startQTimer();
+    startQTimer(levelRef.current);
   },[activeTenses]);
 
   const startGame=(tensesToUse, lvl)=>{
     const tenses=tensesToUse||activeTenses;
     const currentLevel=lvl||level||LEVELS[1]; // défaut level 2
     const qSeconds=currentLevel.seconds;
+    levelRef.current=qSeconds; // sync ref pour callbacks
     const nQ=mode==="balisee"?baliseeMaxQ:maxQ;
     stopTimer();
     setScore(0);setTotal(0);setStreak(0);setBestStreak(0);setSpeedBonuses([]);setSendStatus(null);
@@ -746,7 +748,7 @@ function App(){
         </p>
         <div style={{display:"flex",flexDirection:"column",gap:"0.8rem"}}>
           {LEVELS.map(lv=>(
-            <button key={lv.id} onClick={()=>{setLevel(lv);startGame(baliseedTenses,lv);}} className="startbtn" style={{
+            <button key={lv.id} onClick={()=>{setLevel(lv);levelRef.current=lv.seconds;startGame(baliseedTenses,lv);}} className="startbtn" style={{
               padding:"1.1rem 1.5rem",
               background:C.surface,
               border:`2px solid ${C.border}`,
