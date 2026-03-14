@@ -578,25 +578,8 @@ function App(){
     setChoices(buildChoices(question.tenseId,tenses));
     setAnswered(null);
     setChosen(null);
-    // start q timer
-    qTimeRef.current=qSeconds;
-    setQTimeLeft(qSeconds);
-    qTimerRef.current=setInterval(()=>{
-      qTimeRef.current=qTimeRef.current-1;
-      setQTimeLeft(qTimeRef.current);
-      if(qTimeRef.current<=0){
-        clearInterval(qTimerRef.current);
-        setAnswered("wrong");
-        setChosen("__timeout__");
-        setTotal(t=>{
-          const nt=t+1;
-          if(nt>=nQ){ stopTimer(); setTimeout(()=>setGameOver(true),900); }
-          return nt;
-        });
-        setStreak(0);
-      }
-    },1000);
-  };
+    // start q timer via startQTimer pour cohérence avec nextQ
+    startQTimer(qSeconds);
 
   useEffect(()=>()=>stopTimer(),[]);
 
