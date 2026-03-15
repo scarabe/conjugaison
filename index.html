@@ -980,7 +980,8 @@ function App(){
   // Envoi vers Google Sheets + records uniquement en mode balisée
   useEffect(()=>{
     if(gameOver && total>0 && mode==="balisee"){
-      const s100=computeScore100(speedBonuses,maxQ);
+      const nQ=mode==="balisee"?baliseeMaxQ:maxQ;
+      const s100=computeScore100(speedBonuses,nQ);
       sendToSheet(prenom,s100,score,total);
       // Sauvegarde records
       const lvlId=level?level.id:1;
