@@ -1208,18 +1208,17 @@ function App(){
               <button key={id} onClick={()=>handleChoice(id)}
                 className={answered?"":"choicebtn"}
                 style={{
-                  width:"100%",padding:"1rem 1.4rem",background:bg,
+                  width:"100%",padding:"0.85rem 1.2rem",background:bg,
                   border:`2px solid ${border}`,borderRadius:10,
                   cursor:answered?"default":"pointer",
-                  display:"flex",flexDirection:"column",alignItems:"flex-start",gap:"0.25rem",
+                  display:"flex",flexDirection:"row",alignItems:"center",
+                  justifyContent:"space-between",gap:"0.8rem",
                   transition:"all 0.15s",fontFamily:"Georgia,serif",
-                  textAlign:"left",
                 }}>
-                <span style={{fontSize:"1.2rem",fontWeight:"bold",color:col,lineHeight:1.2}}>{t.label}</span>
+                <span style={{fontSize:"1.15rem",fontWeight:"bold",color:col,lineHeight:1.2,flex:1}}>{t.label}</span>
                 <span style={{
-                  fontSize:"0.8rem",fontStyle:"italic",
+                  fontSize:"0.85rem",fontStyle:"italic",flexShrink:0,
                   color:answered?modecol:(MODE_COLORS[t.mode]||C.textMid),
-                  opacity:answered?1:0.85,
                 }}>{t.mode}</span>
               </button>
             );
