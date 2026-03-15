@@ -1183,30 +1183,30 @@ function App(){
         </div>
 
         {/* Choices */}
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"0.7rem",marginBottom:"1rem"}}>
+        <div style={{display:"flex",flexDirection:"column",gap:"0.6rem",marginBottom:"1rem"}}>
           {choices.map(id=>{
             const t=getTense(id);
             const isCorrect=id===q.tenseId;
             const isChosen=id===chosen;
-            let bg=C.surface2, border=C.border, col=C.text;
+            let bg=C.surface2, border=C.border, col=C.text, modecol=C.textMid;
             if(answered){
-              if(isCorrect){bg=C.greenDim;border=C.green;col=C.green;}
-              else if(isChosen){bg=C.redDim;border=C.red;col=C.red;}
-              else{bg="transparent";border=C.textDim;col=C.textDim;}
+              if(isCorrect){bg=C.greenDim;border=C.green;col=C.green;modecol=C.green;}
+              else if(isChosen){bg=C.redDim;border=C.red;col=C.red;modecol=C.red;}
+              else{bg="transparent";border=C.textDim;col=C.textDim;modecol=C.textDim;}
             }
             return (
               <button key={id} onClick={()=>handleChoice(id)}
                 className={answered?"":"choicebtn"}
                 style={{
-                  padding:"1rem 0.5rem",background:bg,
+                  width:"100%",padding:"0.9rem 1.2rem",background:bg,
                   border:`2px solid ${border}`,borderRadius:10,
                   cursor:answered?"default":"pointer",
-                  display:"flex",flexDirection:"column",alignItems:"center",gap:"0.3rem",
-                  transition:"all 0.15s",fontFamily:"Georgia,serif",
-                  minHeight:"4.5rem",
+                  display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between",
+                  gap:"1rem",transition:"all 0.15s",fontFamily:"Georgia,serif",
+                  textAlign:"left",
                 }}>
-                <span style={{fontSize:"0.68rem",textTransform:"uppercase",letterSpacing:"0.1em",color:answered?(isCorrect?C.green:isChosen?C.red:C.textDim):C.textMid}}>{t.mode}</span>
-                <span style={{fontSize:"1.1rem",fontWeight:"bold",color:col,textAlign:"center",lineHeight:1.2}}>{t.label}</span>
+                <span style={{fontSize:"1.15rem",fontWeight:"bold",color:col,flex:1}}>{t.label}</span>
+                <span style={{fontSize:"0.72rem",textTransform:"uppercase",letterSpacing:"0.1em",color:modecol,flexShrink:0}}>{t.mode}</span>
               </button>
             );
           })}
